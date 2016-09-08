@@ -15,6 +15,8 @@ namespace Phoneword
 
         public MainPage()
         {
+            this.Padding = new Thickness(20, Device.OnPlatform(40, 20, 20), 20, 20);
+
             StackLayout panel = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
