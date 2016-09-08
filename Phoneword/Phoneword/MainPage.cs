@@ -12,6 +12,7 @@ namespace Phoneword
         Entry phoneNumberText;
         Button translateButton;
         Button callButton;
+        string translatedNumber;
 
         public MainPage()
         {
@@ -39,6 +40,7 @@ namespace Phoneword
             {
                 Text = "Translate"
             });
+            translateButton.Clicked += onTranslate;
 
             panel.Children.Add(callButton = new Button
             {
@@ -47,6 +49,22 @@ namespace Phoneword
             });
 
             Content = panel;
+        }
+
+        private void onTranslate(object sender, EventArgs e)
+        {
+            string enteredNumber = phoneNumberText.Text;
+            translatedNumber = Core.PhonewordTranslator.ToNumber(enteredNumber);
+            if (!string.IsNullOrEmpty(translatedNumber))
+            {
+                callButton.IsEnabled = true;
+                callButton.Text = "Call " + translatedNumber;
+            }
+            else
+            {
+                callButton.IsEnabled = false;
+                callButton.Text = "Call";
+            }
         }
     }
 }
