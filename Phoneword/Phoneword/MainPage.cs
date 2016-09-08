@@ -15,7 +15,13 @@ namespace Phoneword
 
         public MainPage()
         {
-            StackLayout panel = new StackLayout();
+            StackLayout panel = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Orientation = StackOrientation.Vertical,
+                Spacing = 15
+            };
 
             panel.Children.Add(new Label
             {
