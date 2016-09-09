@@ -47,12 +47,18 @@ namespace Phoneword
                 Text = "Call",
                 IsEnabled = false   
             });
+            callButton.Clicked += OnCall;
 
             Content = panel;
         }
 
-        private void onTranslate(object sender, EventArgs e)
+        private void OnCall(object sender, EventArgs e)
         {
+            throw new NotImplementedException();
+        }
+
+        private void onTranslate(object sender, EventArgs e)
+        {    
             string enteredNumber = phoneNumberText.Text;
             translatedNumber = Core.PhonewordTranslator.ToNumber(enteredNumber);
             if (!string.IsNullOrEmpty(translatedNumber))
