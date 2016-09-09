@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Phoneword.Droid;
+using Xamarin.Forms;
 
 [assembly: Xamarin.Forms.Dependency(typeof(PhoneDialer))]
 
@@ -19,7 +20,22 @@ namespace Phoneword.Droid
     {
         public bool Dial(string number)
         {
-            throw new NotImplementedException();
+            Context context = Forms.Context;
+            if (context == null)
+                return false;
+
+            try
+            {
+                Intent phone = new Intent(Intent.ActionCall,
+                              Android.Net.Uri.Parse(string.Format("tel:{0}", number)));
+                context.StartActivity(phone);
+
+                return true;
+
+            } catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
