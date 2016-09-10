@@ -8,10 +8,11 @@ using Xamarin.Forms;
 
 namespace Phoneword
 {
-    public partial class CallHistory : ContentPage
+    public partial class CallHistoryPage : ContentPage
     {
-        public CallHistory()
+        public CallHistoryPage()
         {
+            DisplayAlert("que pasa!", App.PhoneNumbers[0].ToString(), "cancelling...");
             InitializeComponent();
         }
     }

@@ -36,8 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="CallHistory.xaml.cs">
-      <DependentUpon>CallHistory.xaml</DependentUpon>
+    <Compile Include="CallHistoryPage.xaml.cs">
+      <DependentUpon>CallHistoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="IDialer.cs" />
     <Compile Include="MainPage.cs" />
@@ -62,7 +62,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CallHistory.xaml">
+    <EmbeddedResource Include="CallHistoryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

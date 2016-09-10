@@ -14,6 +14,8 @@ namespace Phoneword
         Button callButton;
         string translatedNumber;
 
+        Button callHistoryButton;
+
         public MainPage()
         {
             this.Padding = new Thickness(20, Device.OnPlatform(40, 20, 20), 20, 20);
@@ -49,7 +51,19 @@ namespace Phoneword
             });
             callButton.Clicked += OnCall;
 
+            panel.Children.Add(callHistoryButton = new Button
+            {
+                Text = "Call History",
+                IsEnabled = false
+            });
+            callHistoryButton.Clicked += onCallHistory;
+            
             Content = panel;
+        }
+
+        private async void onCallHistory(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CallHistoryPage());
         }
 
         private async void OnCall(object sender, EventArgs e)
@@ -58,7 +72,11 @@ namespace Phoneword
             {
                 var dialer = DependencyService.Get<IDialer>();
                 if (dialer != null)
+                {
+                    App.PhoneNumbers.Add(translatedNumber);
+                    callHistoryButton.IsEnabled = true;
                     dialer.Dial(translatedNumber);
+                }
             }
         }
 
