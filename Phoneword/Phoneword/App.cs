@@ -9,8 +9,12 @@ namespace Phoneword
 {
     public class App : Application
     {
+        public static List<string> PhoneNumbers { get; set; }
+
         public App()
         {
+            PhoneNumbers = new List<string>();
+
             // The root page of your application
             MainPage = new MainPage();
         }
