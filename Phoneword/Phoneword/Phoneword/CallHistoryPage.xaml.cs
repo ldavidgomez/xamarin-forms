@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+
+namespace Phoneword
+{
+    public partial class CallHistoryPage : ContentPage
+    {
+        public CallHistoryPage()
+        {
+            DisplayAlert("que pasa!", App.PhoneNumbers[0].ToString(), "cancelling...");
+            InitializeComponent();
+        }
+    }
+}
