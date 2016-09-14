@@ -8,6 +8,13 @@ namespace Menu.Model
 {
     class WeeklyMenu
     {
+        Guid id;
         List<DailyMenu> dailyMenus;
+
+        public WeeklyMenu()
+        {
+            id = Guid.NewGuid();
+            dailyMenus = new List<Model.DailyMenu>();
+        }
     }
 }

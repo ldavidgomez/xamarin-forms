@@ -37,6 +37,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailyMenuUT.cs" />
     <Compile Include="MealtimeUT.cs" />
     <Compile Include="ItemUT.cs" />
     <Compile Include="TestClass.cs" />

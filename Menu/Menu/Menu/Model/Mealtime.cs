@@ -8,6 +8,7 @@ namespace Menu.Model
 {
     public class Mealtime
     {
+        Guid id;
         List<Item> items;
 
         public int length {
@@ -22,6 +23,7 @@ namespace Menu.Model
 
         public Mealtime()
         {
+            id = Guid.NewGuid();
             this.items = new List<Item>();
         }
 
