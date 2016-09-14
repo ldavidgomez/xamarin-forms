@@ -36,7 +36,7 @@ namespace Menu
                 BorderWidth = 1
             };
             button1.Clicked += async (sender, args) =>
-                await Navigation.PushAsync(new NewMenuPage());
+                await Navigation.PushAsync(new CreateMenuPage());
 
             panel.Children.Add(button1);
 

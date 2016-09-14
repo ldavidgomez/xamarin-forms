@@ -7,10 +7,12 @@ using Xamarin.Forms;
 
 namespace Menu
 {
-    public class NewMenuPage : ContentPage
+    public class CreateMenuPage : ContentPage
     {
-        public NewMenuPage()
+        public CreateMenuPage()
         {
+            this.Title = "Titulito";
+
             Label header = new Label
             {
                 Text = "Label",
@@ -22,11 +24,7 @@ namespace Menu
             Label label = new Label
             {
                 Text =
-                    "Xamarin.Forms is a cross-platform natively " +
-                    "backed UI toolkit abstraction that allows " +
-                    "developers to easily create user interfaces " +
-                    "that can be shared across Android, iOS, and " +
-                    "Windows Phone.",
+                    "Create menu",
 
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 VerticalOptions = LayoutOptions.CenterAndExpand
