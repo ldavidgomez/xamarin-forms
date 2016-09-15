@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 namespace Menu.Tests1
 {
     [TestFixture]
-    public class ItemUT
+    public class PlanUT
     {
         [Test]
-        public void createItem()
+        public void CreatePlan()
         {
-            string itemText = "New item";
-            Item item = new Item(itemText);
+            string planText = "New plan";
+            Plan plan = new Plan(planText);
 
-            Assert.AreEqual(item.GetText(), itemText);
+            Assert.AreEqual(plan.GetDescription(), planText);
         }        
     }
 }

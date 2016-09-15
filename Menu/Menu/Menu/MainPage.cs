@@ -11,6 +11,7 @@ namespace Menu
     {
         public MainPage()
         {
+            this.Title = "Planner";
             this.Padding = new Thickness(20, Device.OnPlatform(40, 20, 20), 20, 20);
 
             StackLayout panel = new StackLayout
@@ -23,32 +24,58 @@ namespace Menu
 
             Label header = new Label
             {
-                Text = "Welcome to menu app!",
+                Text = "Last updates",
+                HorizontalTextAlignment = TextAlignment.Start,
                 FontAttributes = FontAttributes.Bold,
-                HorizontalOptions = LayoutOptions.Center
+                HorizontalOptions = LayoutOptions.StartAndExpand
             };
 
             panel.Children.Add(header);
 
-            Button button1 = new Button
+            StackLayout lastUpdatePanel = new StackLayout
             {
-                Text = " New Menu ",
-                BorderWidth = 1
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Orientation = StackOrientation.Vertical,
+                Spacing = 15,
+                HeightRequest = 200
             };
-            button1.Clicked += async (sender, args) =>
-                await Navigation.PushAsync(new CreateMenuPage());
 
-            panel.Children.Add(button1);
-
-            Button button2 = new Button
+            var tableItems = new List<string>();
+            for (int i = 0; i < 100; i++)
             {
-                Text = " Menu History ",
-                BorderWidth = 1
-            };
-            button2.Clicked += async (sender, args) =>
-                await Navigation.PushAsync(new HistoryMenuPage());
+                tableItems.Add(i + " row");
+            }
 
-            panel.Children.Add(button2);
+            ListView lastUptdates = new ListView
+            {
+                SeparatorVisibility = SeparatorVisibility.Default,
+                SeparatorColor = Color.White,
+                HeightRequest = 200,
+                ItemsSource = tableItems
+            };
+
+            lastUpdatePanel.Children.Add(lastUptdates);
+            panel.Children.Add(lastUpdatePanel);
+
+            //Button button1 = new Button
+            //{
+            //    Text = " New Menu ",
+            //    BorderWidth = 1
+            //};
+            //button1.Clicked += async (sender, args) =>
+            //    await Navigation.PushAsync(new CreateMenuPage());
+
+            //panel.Children.Add(button1);
+
+            //Button button2 = new Button
+            //{
+            //    Text = " Menu History ",
+            //    BorderWidth = 1
+            //};
+            //button2.Clicked += async (sender, args) =>
+            //    await Navigation.PushAsync(new HistoryMenuPage());
+
+            //panel.Children.Add(button2);
 
             // Build the page.
             this.Content = panel;
