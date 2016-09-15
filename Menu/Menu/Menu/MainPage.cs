@@ -14,7 +14,7 @@ namespace Menu
             this.Title = "Planner";
             this.Padding = new Thickness(20, Device.OnPlatform(40, 20, 20), 20, 20);
 
-            StackLayout panel = new StackLayout
+            StackLayout mainPanel = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -22,40 +22,18 @@ namespace Menu
                 Spacing = 15
             };
 
-            Label header = new Label
-            {
-                Text = "Last updates",
-                HorizontalTextAlignment = TextAlignment.Start,
-                FontAttributes = FontAttributes.Bold,
-                HorizontalOptions = LayoutOptions.StartAndExpand
-            };
+            //Label lastUpdateLabel = new Label
+            //{
+            //    Text = "Last updates",
+            //    HorizontalTextAlignment = TextAlignment.Start,
+            //    FontAttributes = FontAttributes.Bold,
+            //    HorizontalOptions = LayoutOptions.StartAndExpand
+            //};
 
-            panel.Children.Add(header);
+            //mainPanel.Children.Add(lastUpdateLabel);
 
-            StackLayout lastUpdatePanel = new StackLayout
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Vertical,
-                Spacing = 15,
-                HeightRequest = 200
-            };
-
-            var tableItems = new List<string>();
-            for (int i = 0; i < 100; i++)
-            {
-                tableItems.Add(i + " row");
-            }
-
-            ListView lastUptdates = new ListView
-            {
-                SeparatorVisibility = SeparatorVisibility.Default,
-                SeparatorColor = Color.White,
-                HeightRequest = 200,
-                ItemsSource = tableItems
-            };
-
-            lastUpdatePanel.Children.Add(lastUptdates);
-            panel.Children.Add(lastUpdatePanel);
+            
+            mainPanel.Children.Add(new LastUpdates());
 
             //Button button1 = new Button
             //{
@@ -78,7 +56,7 @@ namespace Menu
             //panel.Children.Add(button2);
 
             // Build the page.
-            this.Content = panel;
+            this.Content = mainPanel;
         }
     }
 }

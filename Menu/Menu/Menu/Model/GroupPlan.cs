@@ -12,7 +12,7 @@ namespace Menu.Model
     {
         [PrimaryKey]
         Guid id { get; set; }
-        string description { get; set; }
+        public string description { get; set; }
         List<IPlan> planList;
 
         public int length {
