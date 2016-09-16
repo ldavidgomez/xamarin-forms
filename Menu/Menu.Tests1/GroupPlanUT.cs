@@ -12,7 +12,7 @@ namespace Menu.Tests1
     public class GroupPlanUT
     {
         [Test]
-        public void CreateGroupPlan()
+        public void CreatePlan()
         {
             string description = "New GroupPlan";
             DateTime date = DateTime.Now;
