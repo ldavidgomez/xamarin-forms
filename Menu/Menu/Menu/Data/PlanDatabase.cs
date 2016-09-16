@@ -44,7 +44,7 @@ namespace Menu.Data
         {
             lock (locker)
             {
-                var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate LIMIT 5");
+                var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT 5");
                 return groupPlan.ToList();
             }
         }
