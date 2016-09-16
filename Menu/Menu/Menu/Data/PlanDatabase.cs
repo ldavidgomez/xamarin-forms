@@ -40,11 +40,11 @@ namespace Menu.Data
             }
         }
 
-        public IList<GroupPlan> GetLastUpdates()
+        public IList<GroupPlan> GetLastUpdates(int limit)
         {
             lock (locker)
             {
-                var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT 5");
+                var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", limit);
                 return groupPlan.ToList();
             }
         }
