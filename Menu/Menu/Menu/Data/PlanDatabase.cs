@@ -10,8 +10,7 @@ using Menu.Model;
 
 namespace Menu.Data
 {
-
-    public class PlanDatabase
+    public class PlanDatabase : IPlanData
     {
         static object locker = new object();
 
@@ -26,13 +25,28 @@ namespace Menu.Data
         /// </param>
         public PlanDatabase()
         {
-            database = DependencyService.Get<ISQLite>().GetConnection();
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            GetConnection();
+            CreateTables();
+        }
+
+        private void CreateTables()
+        {
             // create the tables
             database.CreateTable<Plan>();
             database.CreateTable<GroupPlan>();
         }
 
-        public Plan GetPlan(Guid id)
+        private void GetConnection()
+        {
+            database = DependencyService.Get<ISQLite>().GetConnection();
+        }
+
+        public IPlan GetPlan(Guid id)
         {
             lock (locker)
             {
@@ -45,6 +59,15 @@ namespace Menu.Data
             lock (locker)
             {
                 var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", limit);
+                return groupPlan.ToList();
+            }
+        }
+
+        public IList<GroupPlan> GetWeeklyPlan(DateTime week)
+        {
+            lock (locker)
+            {
+                var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", week);
                 return groupPlan.ToList();
             }
         }

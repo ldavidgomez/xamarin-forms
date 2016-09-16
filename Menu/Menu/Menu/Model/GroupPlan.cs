@@ -13,6 +13,9 @@ namespace Menu.Model
         [PrimaryKey]
         Guid id { get; set; }
         public string description { get; set; }
+        public string category { get; set; }
+        public PlanEnumeration.PlanType type { get; set; }
+        public DateTime date { get; set; }
         public DateTime lastUpdate { get; set; }
         List<IPlan> planList;
 
@@ -29,10 +32,13 @@ namespace Menu.Model
         public GroupPlan()
         { }
 
-        public GroupPlan(string description)
+        public GroupPlan(string description, DateTime date, string category, PlanEnumeration.PlanType type)
         {
             this.id = Guid.NewGuid();
             this.description = description;
+            this.category = category;
+            this.type = type;
+            this.date = date;
             this.planList = new List<IPlan>();
             this.lastUpdate = DateTime.Now;
         }
@@ -40,6 +46,21 @@ namespace Menu.Model
         public string GetDescription()
         {
             return this.description;
+        }
+
+        public DateTime GetDate()
+        {
+            return this.date;
+        }
+
+        public string GetCategory()
+        {
+            return this.category;
+        }
+
+        public PlanEnumeration.PlanType GetPlanType()
+        {
+            return this.type;
         }
 
         public void AddPlan(IPlan plan)

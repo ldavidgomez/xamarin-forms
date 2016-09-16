@@ -15,16 +15,22 @@ namespace Menu.Tests1
         public void CreateGroupPlan()
         {
             string description = "New GroupPlan";
-            GroupPlan groupPlan = new GroupPlan(description);
+            DateTime date = DateTime.Now;
+            string category = "category";
+            PlanEnumeration.PlanType type = PlanEnumeration.PlanType.Weekly;
+            GroupPlan groupPlan = new GroupPlan(description, date, category, type);
 
             Assert.AreEqual(groupPlan.GetDescription(), description);
+            Assert.AreEqual(groupPlan.GetDate(), date);
+            Assert.AreEqual(groupPlan.GetCategory(), category);
+            Assert.AreEqual(groupPlan.GetPlanType(), type);
         }       
         
         [Test]
         public void AddPlan()
         {
-            GroupPlan mainPlan = new GroupPlan("MainPlan");
-            GroupPlan subPlan = new GroupPlan("SubPlan");
+            GroupPlan mainPlan = new GroupPlan("MainPlan", DateTime.Now, "category1", PlanEnumeration.PlanType.Weekly);
+            GroupPlan subPlan = new GroupPlan("SubPlan", DateTime.Now, "subcategory", PlanEnumeration.PlanType.Daily);
 
             mainPlan.AddPlan(subPlan);
 
@@ -34,8 +40,8 @@ namespace Menu.Tests1
         [Test]
         public void GetPlan()
         {
-            GroupPlan mainPlan = new GroupPlan("MainPlan");
-            GroupPlan subPlan = new GroupPlan("SubPlan");
+            GroupPlan mainPlan = new GroupPlan("MainPlan", DateTime.Now, "category1", PlanEnumeration.PlanType.Weekly);
+            GroupPlan subPlan = new GroupPlan("SubPlan", DateTime.Now, "subcategory", PlanEnumeration.PlanType.Daily);
 
             mainPlan.AddPlan(subPlan);
 

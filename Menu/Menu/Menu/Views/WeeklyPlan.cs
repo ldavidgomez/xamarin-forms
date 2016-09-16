@@ -9,11 +9,11 @@ using Xamarin.Forms;
 
 namespace Menu
 {
-    public class LastUpdates : StackLayout
+    public class WeeklyPlan : StackLayout
     {
         ListView listView;
 
-        public LastUpdates()
+        public WeeklyPlan(DateTime week)
         {
             Label lastUpdateLabel = new Label
             {
@@ -23,7 +23,7 @@ namespace Menu
                 HorizontalOptions = LayoutOptions.StartAndExpand
             };
 
-            listView.ItemsSource = App.Database.GetLastUpdates(5);
+            listView.ItemsSource = App.Database.GetWeeklyPlan(week);
             listView.ItemTemplate = new DataTemplate(typeof(TextCell));
             listView.ItemTemplate.SetBinding(TextCell.TextProperty, "description");
 

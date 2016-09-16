@@ -21,18 +21,20 @@ namespace Menu
                 Orientation = StackOrientation.Vertical,
                 Spacing = 15
             };
+
+
             
             mainPanel.Children.Add(new LastUpdates());
 
-            //Button button1 = new Button
-            //{
-            //    Text = " New Menu ",
-            //    BorderWidth = 1
-            //};
-            //button1.Clicked += async (sender, args) =>
-            //    await Navigation.PushAsync(new CreateMenuPage());
+            Button button1 = new Button
+            {
+                Text = " New Menu ",
+                BorderWidth = 1
+            };
+            button1.Clicked += async (sender, args) =>
+                await Navigation.PushAsync(new WeeklyPlanPage());
 
-            //panel.Children.Add(button1);
+            mainPanel.Children.Add(button1);
 
             //Button button2 = new Button
             //{
@@ -42,7 +44,7 @@ namespace Menu
             //button2.Clicked += async (sender, args) =>
             //    await Navigation.PushAsync(new HistoryMenuPage());
 
-            //panel.Children.Add(button2);
+            //mainPanel.Children.Add(button2);
 
             // Build the page.
             this.Content = mainPanel;
