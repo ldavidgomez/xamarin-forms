@@ -14,10 +14,39 @@ namespace Menu.Tests1
         [Test]
         public void CreatePlan()
         {
-            string planText = "New plan";
-            Plan plan = new Plan(planText);
+            string description = "New GroupPlan";
+            DateTime date = DateTime.Now;
+            string category = "category";
+            PlanEnumeration.PlanType type = PlanEnumeration.PlanType.Weekly;
+            Plan groupPlan = new Plan(description, date, category, type);
 
-            Assert.AreEqual(plan.GetDescription(), planText);
-        }        
+            Assert.AreEqual(groupPlan.GetDescription(), description);
+            Assert.AreEqual(groupPlan.GetDate(), date);
+            Assert.AreEqual(groupPlan.GetCategory(), category);
+            Assert.AreEqual(groupPlan.GetPlanType(), type);
+        }       
+        
+        [Test]
+        public void AddPlan()
+        {
+            Plan weeklyPlan = new Plan("MainPlan", DateTime.Now, "category1", PlanEnumeration.PlanType.Weekly);
+            Plan dailyPlan = new Plan("SubPlan", DateTime.Now, "subcategory", PlanEnumeration.PlanType.Daily);
+
+            weeklyPlan.AddPlan(dailyPlan);
+
+            Assert.IsTrue(weeklyPlan.Exists(dailyPlan));
+        } 
+
+        [Test]
+        public void GetPlan()
+        {
+            Plan weeklyPlan = new Plan("MainPlan", DateTime.Now, "category1", PlanEnumeration.PlanType.Weekly);
+            Plan dailyPlan = new Plan("SubPlan", DateTime.Now, "subcategory", PlanEnumeration.PlanType.Daily);
+
+            weeklyPlan.AddPlan(dailyPlan);
+
+            Plan searchedPlan = (Plan) weeklyPlan.getPlan(dailyPlan);
+            Assert.AreSame(dailyPlan, searchedPlan);
+        }
     }
 }

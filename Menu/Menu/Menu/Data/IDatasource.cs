@@ -9,9 +9,9 @@ namespace Menu.Data
 {
     public interface IPlanData
     {
-        IPlan GetPlan(Guid id);
-        IList<GroupPlan> GetLastUpdates(int limit);
-        IList<GroupPlan> GetWeeklyPlan(DateTime week);
+        //IPlan GetPlan(Guid id);
+        IList<Plan> GetLastUpdates(int limit);
+        IList<Plan> GetWeeklyPlan(DateTime week);
 
     }
 }

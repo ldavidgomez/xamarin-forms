@@ -37,8 +37,8 @@ namespace Menu.Data
         private void CreateTables()
         {
             // create the tables
+            //database.CreateTable<Plan>();
             database.CreateTable<Plan>();
-            database.CreateTable<GroupPlan>();
         }
 
         private void GetConnection()
@@ -46,29 +46,53 @@ namespace Menu.Data
             database = DependencyService.Get<ISQLite>().GetConnection();
         }
 
-        public IPlan GetPlan(Guid id)
-        {
-            lock (locker)
-            {
-                return database.Table<Plan>().FirstOrDefault(x => x.id == id);
-            }
-        }
+        //public IPlan GetPlan(Guid id)
+        //{
+        //    lock (locker)
+        //    {
+        //        return database.Table<Plan>().FirstOrDefault(x => x.id == id);
+        //    }
+        //}
 
-        public IList<GroupPlan> GetLastUpdates(int limit)
+        public IList<Plan> GetLastUpdates(int limit)
         {
             lock (locker)
             {
-                var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", limit);
+                var groupPlan = database.Query<Plan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", limit);
                 return groupPlan.ToList();
             }
         }
 
-        public IList<GroupPlan> GetWeeklyPlan(DateTime week)
+        public IList<Plan> GetWeeklyPlan(DateTime week)
         {
             lock (locker)
             {
-                var groupPlan = database.Query<GroupPlan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", week);
+                var groupPlan = database.Query<Plan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", week);
                 return groupPlan.ToList();
+            }
+        }
+
+        public int SavePlan(Plan plan)
+        {
+            lock (locker)
+            {
+                if (plan.id != 0)
+                {
+                    database.Update(plan);
+                    return plan.id;
+                }
+                else
+                {
+                    return database.Insert(plan);
+                }
+            }
+        }
+
+        public int DeletePlan(int id)
+        {
+            lock (locker)
+            {
+                return database.Delete<Plan>(id);
             }
         }
 

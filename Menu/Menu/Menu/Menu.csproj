@@ -46,8 +46,6 @@
     <Compile Include="Views\LastUpdates.cs" />
     <Compile Include="MainPage.cs" />
     <Compile Include="WeeklyPlanPage.cs" />
-    <Compile Include="Model\IPlan.cs" />
-    <Compile Include="Model\GroupPlan.cs" />
     <Compile Include="Model\Plan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
