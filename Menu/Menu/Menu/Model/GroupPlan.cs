@@ -13,6 +13,7 @@ namespace Menu.Model
         [PrimaryKey]
         Guid id { get; set; }
         public string description { get; set; }
+        public DateTime lastUpdate { get; set; }
         List<IPlan> planList;
 
         public int length {
@@ -25,11 +26,15 @@ namespace Menu.Model
             }
         }
 
+        public GroupPlan()
+        { }
+
         public GroupPlan(string description)
         {
             this.id = Guid.NewGuid();
             this.description = description;
             this.planList = new List<IPlan>();
+            this.lastUpdate = DateTime.Now;
         }
 
         public string GetDescription()

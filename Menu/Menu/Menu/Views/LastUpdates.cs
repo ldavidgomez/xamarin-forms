@@ -34,7 +34,7 @@ namespace Menu
                 RowHeight = 40
             };
 
-            listView.ItemsSource = tableItems;
+            listView.ItemsSource = App.Database.GetLastUpdates();
             listView.ItemTemplate = new DataTemplate(typeof(TextCell));
             listView.ItemTemplate.SetBinding(TextCell.TextProperty, "description");
             //listView.ItemsSource = new Session[] { new Session { Title = "test", Location = "somewhere" } };

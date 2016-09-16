@@ -8,11 +8,15 @@ using SQLite;
 
 namespace Menu.Model
 {
+    [Table("Plan")]
     public class Plan : IPlan
     {
         [PrimaryKey]
-        Guid id { get; set; }
-        string description { get; set; }
+        public Guid id { get; set; }
+        public string description { get; set; }
+
+        public Plan()
+        { }
 
         public Plan(string description)
         {

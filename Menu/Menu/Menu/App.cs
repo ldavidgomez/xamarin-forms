@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Menu.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,19 @@ namespace Menu
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+        static PlanDatabase database;
+        public static PlanDatabase Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new PlanDatabase();
+                }
+                return database;
+            }
         }
     }
 }

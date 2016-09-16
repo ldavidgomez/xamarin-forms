@@ -21,17 +21,6 @@ namespace Menu
                 Orientation = StackOrientation.Vertical,
                 Spacing = 15
             };
-
-            //Label lastUpdateLabel = new Label
-            //{
-            //    Text = "Last updates",
-            //    HorizontalTextAlignment = TextAlignment.Start,
-            //    FontAttributes = FontAttributes.Bold,
-            //    HorizontalOptions = LayoutOptions.StartAndExpand
-            //};
-
-            //mainPanel.Children.Add(lastUpdateLabel);
-
             
             mainPanel.Children.Add(new LastUpdates());
 
