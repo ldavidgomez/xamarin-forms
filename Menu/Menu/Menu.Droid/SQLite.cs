@@ -10,6 +10,7 @@ namespace Menu
 {
     public class SQLite_Android : ISQLite
     {
+
         public SQLite_Android()
         {
         }
@@ -38,6 +39,29 @@ namespace Menu
             // Return the database connection 
             return conn;
         }
+
+        //public global::SQLite.SQLiteAsyncConnection GetAsyncConnection()
+        //{
+        //    var sqliteFilename = "PlanSQLite.db3";
+        //    string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal); // Documents folder
+        //    var path = Path.Combine(documentsPath, sqliteFilename);
+
+        //    var platForm = new SQLitePlatformAndroid();
+
+        //    var connectionFactory = new Func<SQLiteConnectionWithLock>(
+        //        () =>
+        //        {
+        //            if (_conn == null)
+        //            {
+        //                _conn =
+        //                    new SQLiteConnectionWithLock(platForm,
+        //                        new SQLiteConnectionString(path, storeDateTimeAsTicks: true));
+        //            }
+        //            return _conn;
+        //        });
+
+        //    return new SQLiteAsyncConnection(connectionFactory);
+        //}
         #endregion
 
         /// <summary>

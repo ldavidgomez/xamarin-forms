@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using SQLite;
+
 
 namespace Menu.Model
 {
     public class Plan
     {
-        [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
+        [PrimaryKey]
+        public Guid id { get; set; }
         public string description { get; set; }
         public string category { get; set; }
         public PlanEnumeration.PlanType type { get; set; }
@@ -34,7 +32,8 @@ namespace Menu.Model
 
         public Plan(string description, DateTime date, string category, PlanEnumeration.PlanType type)
         {
-           this.description = description;
+            this.id = Guid.NewGuid();
+            this.description = description;
             this.category = category;
             this.type = type;
             this.date = date;

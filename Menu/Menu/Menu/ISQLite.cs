@@ -11,5 +11,6 @@ namespace Menu
     public interface ISQLite
     {
         SQLiteConnection GetConnection();
+       // SQLiteAsyncConnection GetAsyncConnection();
     }
 }

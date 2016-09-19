@@ -14,7 +14,8 @@ namespace Menu.Data
     {
         static object locker = new object();
 
-        SQLiteConnection database;
+        SQLiteConnection SyncConnection;
+        SQLiteAsyncConnection AsyncConnection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Tasky.DL.TaskDatabase"/> TaskDatabase. 
@@ -34,16 +35,20 @@ namespace Menu.Data
             CreateTables();
         }
 
+        private void GetConnection()
+        {
+            SyncConnection = DependencyService.Get<ISQLite>().GetConnection();
+        }
+
+        //private void GetAsyncConnection()
+        //{
+        //    AsyncConnection = DependencyService.Get<ISQLite>().GetAsyncConnection();
+        //}
+
         private void CreateTables()
         {
             // create the tables
-            //database.CreateTable<Plan>();
-            database.CreateTable<Plan>();
-        }
-
-        private void GetConnection()
-        {
-            database = DependencyService.Get<ISQLite>().GetConnection();
+            SyncConnection.CreateTable<Plan>();
         }
 
         //public IPlan GetPlan(Guid id)
@@ -58,8 +63,8 @@ namespace Menu.Data
         {
             lock (locker)
             {
-                var groupPlan = database.Query<Plan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", limit);
-                return groupPlan.ToList();
+                var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] ORDER BY [lastUpdate] DESC LIMIT ?", limit);
+                return plan.ToList();
             }
         }
 
@@ -67,8 +72,8 @@ namespace Menu.Data
         {
             lock (locker)
             {
-                var groupPlan = database.Query<Plan>("SELECT * FROM GroupPlan ORDER BY lastUpdate DESC LIMIT ?", week);
-                return groupPlan.ToList();
+                var plan = SyncConnection.Query<Plan>("SELECT * FROM Plan ORDER BY lastUpdate DESC LIMIT ?", week);
+                return plan.ToList();
             }
         }
 
@@ -76,23 +81,28 @@ namespace Menu.Data
         {
             lock (locker)
             {
-                if (plan.id != 0)
-                {
-                    database.Update(plan);
-                    return plan.id;
-                }
-                else
-                {
-                    return database.Insert(plan);
-                }
+                //if (plan.id != Guid.Empty)
+                //{
+                //    return database.Update(plan);
+                //}
+                //else
+                //{
+                //    return database.Insert(plan);
+                //}
+
+                var affectedRows = SyncConnection.Update(plan);
+                if (affectedRows == 0)
+                    return SyncConnection.Insert(plan);
+
+                return affectedRows;
             }
         }
 
-        public int DeletePlan(int id)
+        public int DeletePlan(Guid id)
         {
             lock (locker)
             {
-                return database.Delete<Plan>(id);
+                return SyncConnection.Delete<Plan>(id);
             }
         }
 
