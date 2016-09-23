@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Planner.Utilities
 {
-    public static class Utilities
+    public static class DateTimeUtils
     {
         //public class DateTimeExtensions
         //{

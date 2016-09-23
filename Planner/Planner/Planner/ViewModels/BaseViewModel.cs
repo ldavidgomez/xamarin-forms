@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Planner
+namespace Planner.ViewModels
 {
 	class BaseViewModel : INotifyPropertyChanged
 	{

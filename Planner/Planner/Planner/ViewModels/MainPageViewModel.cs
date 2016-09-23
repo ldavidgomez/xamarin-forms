@@ -1,13 +1,15 @@
 ﻿using Planner.Model;
 using Planner.Services;
+using Planner.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Planner.ViewModel
+namespace Planner.ViewModels
 {
     class MainPageViewModel : BaseViewModel
     {
@@ -20,55 +22,79 @@ namespace Planner.ViewModel
             private set { _mainText = value; }
         }
 
-        private IList<Plan> _lastUpdatePlans;
-        public IList<Plan> LastUpdatePlans
+        ObservableCollection<WeeklyPlanViewModel> _lastUpdateWeeklyPlans = new ObservableCollection<WeeklyPlanViewModel>();
+        public ObservableCollection<WeeklyPlanViewModel> LastUpdateWeeklyPlans
         {
-            get { return _lastUpdatePlans; }
-            private set { _lastUpdatePlans = value; }
-        }
-
-        private string _categoryText;
-        public string CategoryText
-        {
-            get { return _categoryText; }
-            private set { _categoryText = value; }
-        }
-
-        private IList<Plan> _categories;
-        public IList<Plan> Categories
-        {
-            get { return _categories; }
-            private set { _categories = value; }
-        }
-
-        public MainPageViewModel(Page page)
-        {
-            page.Appearing += (sender, e) =>
+            get { return _lastUpdateWeeklyPlans; }
+            set
             {
-                Bind_MainText();
-                Bind_LastUpdatePlans();
-                Bind_CategoryText();
-                Bind_Categories();
-            };
+                if (_lastUpdateWeeklyPlans == value)
+                    return;
+                _lastUpdateWeeklyPlans = value;
+                OnPropertyChanged();
+            }
         }
 
-        private void Bind_MainText()
+        public MainPageViewModel()
         {
             MainText = "Planner!";
+
+            var lastUpdateWeeklyPlans = PlanService.GetLastUpdates(5);
+
+            foreach (var t in lastUpdateWeeklyPlans)
+            {
+                _lastUpdateWeeklyPlans.Add(new WeeklyPlanViewModel(t));
+            }
+
+            MessagingCenter.Subscribe<MainPage, Plan>(this, "WeeklyPlannAdd", (sender, viewModel) => {
+                var plan = new Plan();
+                var planvm = new WeeklyPlanViewModel(viewModel);
+                Navigation.Push(ViewFactory.CreatePage(planvm));
+            });
         }
 
-        private void Bind_LastUpdatePlans()
+        void Reload()
         {
-            LastUpdatePlans = PlanService.GetLastUpdates();
-        }
-        private void Bind_CategoryText()
-        {
-            CategoryText = "Categories!";
+            var all = App.Database.GetLastUpdates(5);
+
+            // HACK: this kinda breaks iOS "NSInternalInconsistencyException". Works fine in Android.
+            //			Contents.Clear ();
+            //			foreach (var t in all) {
+            //				Contents.Add (new TodoItemCellViewModel (t));
+            //			}
+
+            // HACK: this works in iOS.
+            var x = new ObservableCollection<WeeklyPlanViewModel>();
+            foreach (var t in all)
+            {
+                x.Add(new WeeklyPlanViewModel(t));
+            }
+            LastUpdateWeeklyPlans = x;
         }
 
-        private void Bind_Categories()
+        object selectedPlan;
+        public object SelectedPlan
         {
-            Categories = PlanService.GetCategories();
+            get { return selectedPlan; }
+            set
+            {
+                if (selectedPlan == value)
+                    return;
+                // something was selected
+                selectedPlan = value;
+
+                OnPropertyChanged();
+
+                if (selectedPlan != null)
+                {
+
+                    var todovm = new PlanViewModel(((PlanViewModel)selectedPlan).Plan);
+
+                    Navigation.Push(ViewFactory.CreatePage(todovm));
+
+                    selectedPlan = null;
+                }
+            }
         }
     }
 }

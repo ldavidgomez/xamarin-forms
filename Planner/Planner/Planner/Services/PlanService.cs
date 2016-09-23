@@ -19,12 +19,19 @@ namespace Planner.Services
         //private SQLiteAsyncConnection Database { get; } = DependencyService.Get<ISQLite>().GetAsyncConnection();
         private SQLiteConnection Database { get; } = DependencyService.Get<ISQLite>().GetConnection();
 
-        public IList<Plan> GetLastUpdates()
+        //TODO fix datasource dependency
+
+        public IList<Plan> GetLastUpdates(int limit)
         {
             //using (await Locker.LockAsync())
             //{
-                return Database.Table<Plan>().Where(x => x.id != Guid.Empty).Take(5).ToList<Plan>();
+                return Database.Table<Plan>().Where(x => x.id != Guid.Empty).Take(limit).ToList<Plan>();
             //}
+        }
+
+        public IList<Plan> GetWeeklyPlans(DateTime date)
+        {
+            return Database.Table<Plan>().Where(x => x.startDate <= date && x.endDate >= date.AddDays(7)).Where(x => x.id != Guid.Empty).Take(5).ToList<Plan>();
         }
 
         public IList<Plan> GetCategories()

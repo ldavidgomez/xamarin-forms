@@ -1,4 +1,5 @@
-﻿using Planner.ViewModel;
+﻿using Planner.Model;
+using Planner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,72 +10,42 @@ using Xamarin.Forms;
 
 namespace Planner.Views
 {
-    public class MainPage_View : ContentPage
+    public class MainPage : ContentPage
     {
-        public MainPage_View()
+        public MainPage()
         {
-            BindingContext = new MainPageViewModel(this);
-
             Padding = new Thickness(10);
 
-            // see https://forums.xamarin.com/discussion/45111/has-anybody-managed-to-get-a-toolbar-working-on-winrt-windows-using-xf
-            if (Device.OS == TargetPlatform.Windows)
-                Padding = new Xamarin.Forms.Thickness(Padding.Left, this.Padding.Top, this.Padding.Right, 95);
-
-            //ForceLayout();
-
             Title = " Default title";
-
             this.SetBinding(TitleProperty, "MainText");
 
-            DataTemplate lastUpdate_ItemTemplate = new DataTemplate(() => {
-                var grid = new Grid();
+            NavigationPage.SetHasNavigationBar(this, true);
 
-                var descriptionLabel = new Label { FontAttributes = FontAttributes.Bold };
-                var dateLabel = new Label();
-                //var locationLabel = new Label { HorizontalTextAlignment = TextAlignment.End };
+            var lastUpdateWeeklyPlansLV = new ListView();
+            lastUpdateWeeklyPlansLV.RowHeight = 40;
+            lastUpdateWeeklyPlansLV.SetBinding(ListView.ItemsSourceProperty, "LastUpdateWeeklyPlans");
+            lastUpdateWeeklyPlansLV.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedWeeklyPlan", BindingMode.TwoWay));
+            lastUpdateWeeklyPlansLV.ItemTemplate = new DataTemplate(typeof(WeeklyPlanCell));
 
-                descriptionLabel.SetBinding(Label.TextProperty, "description");
-                dateLabel.SetBinding(Label.TextProperty, "date");
-
-                grid.Children.Add(descriptionLabel);
-                grid.Children.Add(dateLabel, 1, 0);
-                //grid.Children.Add(locationLabel, 2, 0);
-
-                return new ViewCell { View = grid };
-            });
-
-            ListView lastUpdate_ListView = new ListView
+            Content = new StackLayout
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                ItemTemplate = lastUpdate_ItemTemplate
+                Children = { lastUpdateWeeklyPlansLV }
             };
 
-            lastUpdate_ListView.SetBinding(ListView.ItemsSourceProperty, new Binding("LastUpdatePlans"));
+            var toolBarItem = new ToolbarItem("+", null, () => {
+                var tool = new Plan(PlanEnumeration.PlanType.Weekly);
+                MessagingCenter.Send(this, "WeeklyPlannAdd", tool);
+            }, 0, 0);
+            if (Device.OS == TargetPlatform.Android)
+            { // BUG: Android doesn't support the icon being null
+                toolBarItem = new ToolbarItem("+", "plus", () => {
+                    var tool = new Plan(PlanEnumeration.PlanType.Weekly);
+                    MessagingCenter.Send(this, "WeeklyPlannAdd", tool);
+                }, 0, 0);
+            }
+            ToolbarItems.Add(toolBarItem);
 
-            StackLayout mainPanel = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-
-                Children = { lastUpdate_ListView }
-            };
-
-            
-
-            Content = mainPanel;
-        }
-
-        protected override void OnBindingContextChanged()
-        {
-            base.OnBindingContextChanged();
-
-            ToolbarItem addPlan_ItemBar = new ToolbarItem { Icon = "plus_square_black.png", ClassId = "About", Order = ToolbarItemOrder.Primary, BindingContext = BindingContext };
-            //addPlan_ItemBar.SetBinding(Planner.CommandProperty, new Binding("ShowAboutPageCommand"));
-
-            ToolbarItems.Add(addPlan_ItemBar);
         }
     }
 }

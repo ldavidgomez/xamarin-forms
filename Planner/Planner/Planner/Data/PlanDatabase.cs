@@ -68,14 +68,23 @@ namespace Planner.Data
             }
         }
 
-        public IList<Plan> GetWeeklyPlan(DateTime week)
+        public IList<Plan> GetWeeklyPlans(DateTime date)
         {
             lock (locker)
             {
-                var plan = SyncConnection.Query<Plan>("SELECT * FROM Plan ORDER BY lastUpdate DESC LIMIT ?", week);
+                var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [startDate] <= ? AND [endDate] >= ? ORDER BY [startDate] ?", date.Date);
                 return plan.ToList();
             }
         }
+
+        //public IList<Plan> GetWeeklyPlans(int limit)
+        //{
+        //    lock (locker)
+        //    {
+        //        var plan = SyncConnection.Query<Plan>("SELECT * FROM Plan ORDER BY lastUpdate DESC LIMIT ?", limit);
+        //        return plan.ToList();
+        //    }
+        //}
 
         public int SavePlan(Plan plan)
         {

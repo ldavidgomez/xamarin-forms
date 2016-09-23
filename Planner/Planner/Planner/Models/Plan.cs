@@ -1,8 +1,6 @@
-﻿using System;
+﻿using SQLite.Net.Attributes;
+using System;
 using System.Collections.Generic;
-
-using SQLite;
-using SQLite.Net.Attributes;
 
 namespace Planner.Model
 {
@@ -13,7 +11,8 @@ namespace Planner.Model
         public string description { get; set; }
         public string category { get; set; }
         public PlanEnumeration.PlanType type { get; set; }
-        public DateTime date { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
         public DateTime lastUpdate { get; set; }
         List<Plan> planList;
 
@@ -30,16 +29,38 @@ namespace Planner.Model
         public Plan()
         { }
 
-        public Plan(string description, DateTime date, string category, PlanEnumeration.PlanType type)
+        public Plan(PlanEnumeration.PlanType type)
+            : this("Description", DateTime.Now, "Category", type)
+        { }
+
+        public Plan(string description, DateTime startDate, string category, PlanEnumeration.PlanType type)
         {
             this.id = Guid.NewGuid();
             this.description = description;
             this.category = category;
             this.type = type;
-            this.date = date;
+            this.startDate = startDate;
+            setEndDay();
 
             this.planList = new List<Plan>();
             this.lastUpdate = DateTime.Now;
+        }
+
+        private void setEndDay()
+        {
+            switch (this.type)
+            {
+                case PlanEnumeration.PlanType.Item:
+                case PlanEnumeration.PlanType.Plan:
+                case PlanEnumeration.PlanType.Daily:
+                    this.endDate = startDate;
+                    break;
+                case PlanEnumeration.PlanType.Weekly:
+                    this.endDate = startDate.AddDays(7);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public string GetDescription()
@@ -49,7 +70,7 @@ namespace Planner.Model
 
         public DateTime GetDate()
         {
-            return this.date;
+            return this.startDate;
         }
 
         public string GetCategory()

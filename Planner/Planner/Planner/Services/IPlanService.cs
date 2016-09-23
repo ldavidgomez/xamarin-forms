@@ -9,7 +9,7 @@ namespace Planner.Services
 {
     public interface IPlanService
     {
-        IList<Plan> GetLastUpdates();
+        IList<Plan> GetLastUpdates(int limit);
         IList<Plan> GetCategories();
     }
 }
