@@ -39,7 +39,7 @@ namespace Planner.Model
             this.description = description;
             this.category = category;
             this.type = type;
-            this.startDate = startDate;
+            this.startDate = startDate.Date;
             setEndDay();
 
             this.planList = new List<Plan>();
@@ -53,10 +53,10 @@ namespace Planner.Model
                 case PlanEnumeration.PlanType.Item:
                 case PlanEnumeration.PlanType.Plan:
                 case PlanEnumeration.PlanType.Daily:
-                    this.endDate = startDate;
+                    this.endDate = this.startDate;
                     break;
                 case PlanEnumeration.PlanType.Weekly:
-                    this.endDate = startDate.AddDays(7);
+                    this.endDate = this.startDate.AddDays(7);
                     break;
                 default:
                     break;

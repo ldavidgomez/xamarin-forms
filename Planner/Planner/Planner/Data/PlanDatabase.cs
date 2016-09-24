@@ -72,7 +72,8 @@ namespace Planner.Data
         {
             lock (locker)
             {
-                var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [startDate] <= ? AND [endDate] >= ? ORDER BY [startDate] ?", date.Date);
+                var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", date.Date);
+                //var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] ORDER BY [startDate] DESC", date.Date);
                 return plan.ToList();
             }
         }

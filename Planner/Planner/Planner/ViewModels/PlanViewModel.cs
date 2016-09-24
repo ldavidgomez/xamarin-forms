@@ -14,15 +14,6 @@ namespace Planner.ViewModels
         Plan plan;
         ICommand saveCommand, deleteCommand, cancelCommand;
 
-        public Plan Plan { get { return plan; } }
-
-        private string _mainText;
-        public string MainText
-        {
-            get { return _mainText; }
-            private set { _mainText = value; }
-        }
-
         public PlanViewModel(Plan plan)
         {
             MainText = "New Plan!";
@@ -31,15 +22,100 @@ namespace Planner.ViewModels
             deleteCommand = new Command(Delete);
             cancelCommand = new Command(() => Navigation.Pop());
         }
+
+        public Plan Plan { get { return plan; } }
+
         public void Save()
         {
-            MessagingCenter.Send(this, "TodoSaved", plan);
+            MessagingCenter.Send(this, "PlanSaved", plan);
             Navigation.Pop();
         }
         public void Delete()
         {
-            MessagingCenter.Send(this, "TodoDeleted", plan);
+            MessagingCenter.Send(this, "PlanDeleted", plan);
             Navigation.Pop();
+        }
+
+
+        private string _mainText;
+        public string MainText
+        {
+            get { return _mainText; }
+            private set { _mainText = value; }
+        }
+
+        public string Description
+        {
+            get { return plan.description; }
+            set
+            {
+                if (plan.description == value)
+                    return;
+                plan.description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Category
+        {
+            get { return plan.category; }
+            set
+            {
+                if (plan.category == value)
+                    return;
+                plan.category = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime StartDate
+        {
+            get { return plan.startDate; }
+            set
+            {
+                if (plan.startDate == value)
+                    return;
+                plan.startDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+       
+
+        public ICommand SaveCommand
+        {
+            get { return saveCommand; }
+            set
+            {
+                if (saveCommand == value)
+                    return;
+                saveCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand DeleteCommand
+        {
+            get { return deleteCommand; }
+            set
+            {
+                if (deleteCommand == value)
+                    return;
+                deleteCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand CancelCommand
+        {
+            get { return cancelCommand; }
+            set
+            {
+                if (cancelCommand == value)
+                    return;
+                cancelCommand = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

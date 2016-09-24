@@ -62,7 +62,7 @@ namespace Planner.ViewModels
             this.Date = plan.startDate;
             this.MinimunDate = DateTimeUtils.StartOfWeek(plan.startDate, dfi.FirstDayOfWeek);
 
-            _addPlanCommand = new Command(AddPlan);
+            AddPlanCommand = new Command(AddPlan);
 
             var weeklyPlans = App.Database.GetWeeklyPlans(plan.startDate);
 
@@ -72,9 +72,33 @@ namespace Planner.ViewModels
             }
 
             MessagingCenter.Subscribe<WeeklyPlanPage, Plan>(this, "PlanAdd", (sender, viewModel) => {
-                var planvm = new WeeklyPlanViewModel(viewModel);
+                var planvm = new PlanViewModel(viewModel);
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
+
+            MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, model) => {
+                App.Database.SavePlan(model);
+                Reload();
+            });
+        }
+
+        void Reload()
+        {
+            var all = App.Database.GetLastUpdates(5);
+
+            // HACK: this kinda breaks iOS "NSInternalInconsistencyException". Works fine in Android.
+            //			Contents.Clear ();
+            //			foreach (var t in all) {
+            //				Contents.Add (new TodoItemCellViewModel (t));
+            //			}
+
+            // HACK: this works in iOS.
+            var x = new ObservableCollection<PlanViewModel>();
+            foreach (var t in all)
+            {
+                x.Add(new PlanViewModel(t));
+            }
+            WeeklyPlans = x;
         }
 
         public void AddPlan()
@@ -84,16 +108,16 @@ namespace Planner.ViewModels
             Navigation.Push(ViewFactory.CreatePage(todovm));
         }
 
-        public void Save()
-        {
-            MessagingCenter.Send(this, "TodoSaved", plan);
-            Navigation.Pop();
-        }
-        public void Delete()
-        {
-            MessagingCenter.Send(this, "TodoDeleted", plan);
-            Navigation.Pop();
-        }
+        //public void Save()
+        //{
+        //    MessagingCenter.Send(this, "TodoSaved", plan);
+        //    Navigation.Pop();
+        //}
+        //public void Delete()
+        //{
+        //    MessagingCenter.Send(this, "TodoDeleted", plan);
+        //    Navigation.Pop();
+        //}
 
         public ICommand AddPlanCommand
         {
@@ -104,6 +128,31 @@ namespace Planner.ViewModels
                     return;
                 _addPlanCommand = value;
                 OnPropertyChanged();
+            }
+        }
+
+        object selectedItem;
+        public object SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                if (selectedItem == value)
+                    return;
+                // something was selected
+                selectedItem = value;
+
+                OnPropertyChanged();
+
+                if (selectedItem != null)
+                {
+
+                    var todovm = new PlanViewModel(((PlanViewModel)selectedItem).Plan);
+
+                    Navigation.Push(ViewFactory.CreatePage(todovm));
+
+                    selectedItem = null;
+                }
             }
         }
     }
