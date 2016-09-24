@@ -59,22 +59,21 @@ namespace Planner.Data
         //    }
         //}
 
-        public IList<Plan> GetLastUpdates(int limit)
+        public IList<Plan> GetLastUpdatesWeeklyPlans(int limit)
         {
             lock (locker)
             {
-                var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] ORDER BY [lastUpdate] DESC LIMIT ?", limit);
-                return plan.ToList();
+                var lastUpdateWeeklyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? ORDER BY [lastUpdate] DESC LIMIT ?", new object[] { PlanEnumeration.PlanType.Weekly, limit } );
+                return lastUpdateWeeklyPlans.ToList();
             }
         }
 
-        public IList<Plan> GetWeeklyPlans(DateTime date)
+        public IList<Plan> GetWeeklyPlans(Plan plan)
         {
             lock (locker)
             {
-                var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", date.Date);
-                //var plan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] ORDER BY [startDate] DESC", date.Date);
-                return plan.ToList();
+                var weeklyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", new object[] { PlanEnumeration.PlanType.Daily, plan.startDate, plan.endDate });
+                return weeklyPlans.ToList();
             }
         }
 

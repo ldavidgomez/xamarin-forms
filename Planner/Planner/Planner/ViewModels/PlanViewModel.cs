@@ -12,15 +12,15 @@ namespace Planner.ViewModels
     class PlanViewModel : BaseViewModel
     {
         Plan plan;
-        ICommand saveCommand, deleteCommand, cancelCommand;
+        ICommand _saveCommand, _deleteCommand, _cancelCommand;
 
         public PlanViewModel(Plan plan)
         {
             MainText = "New Plan!";
             this.plan = plan;
-            saveCommand = new Command(Save);
-            deleteCommand = new Command(Delete);
-            cancelCommand = new Command(() => Navigation.Pop());
+            SaveCommand = new Command(Save);
+            DeleteCommand = new Command(Delete);
+            CancelCommand = new Command(() => Navigation.Pop());
         }
 
         public Plan Plan { get { return plan; } }
@@ -84,36 +84,36 @@ namespace Planner.ViewModels
 
         public ICommand SaveCommand
         {
-            get { return saveCommand; }
+            get { return _saveCommand; }
             set
             {
-                if (saveCommand == value)
+                if (_saveCommand == value)
                     return;
-                saveCommand = value;
+                _saveCommand = value;
                 OnPropertyChanged();
             }
         }
 
         public ICommand DeleteCommand
         {
-            get { return deleteCommand; }
+            get { return _deleteCommand; }
             set
             {
-                if (deleteCommand == value)
+                if (_deleteCommand == value)
                     return;
-                deleteCommand = value;
+                _deleteCommand = value;
                 OnPropertyChanged();
             }
         }
 
         public ICommand CancelCommand
         {
-            get { return cancelCommand; }
+            get { return _cancelCommand; }
             set
             {
-                if (cancelCommand == value)
+                if (_cancelCommand == value)
                     return;
-                cancelCommand = value;
+                _cancelCommand = value;
                 OnPropertyChanged();
             }
         }

@@ -10,8 +10,8 @@ namespace Planner.Data
     public interface IPlanData
     {
         //IPlan GetPlan(Guid id);
-        IList<Plan> GetLastUpdates(int limit);
-        IList<Plan> GetWeeklyPlans(DateTime date);
+        IList<Plan> GetLastUpdatesWeeklyPlans(int limit);
+        IList<Plan> GetWeeklyPlans(Plan plan);
 
     }
 }

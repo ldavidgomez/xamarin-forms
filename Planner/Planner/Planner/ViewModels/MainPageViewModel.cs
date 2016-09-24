@@ -39,7 +39,7 @@ namespace Planner.ViewModels
         {
             MainText = "Planner!";
 
-            var lastUpdateWeeklyPlans = PlanService.GetLastUpdates(5);
+            var lastUpdateWeeklyPlans = App.Database.GetLastUpdatesWeeklyPlans(5);
 
             foreach (var t in lastUpdateWeeklyPlans)
             {
@@ -47,7 +47,6 @@ namespace Planner.ViewModels
             }
 
             MessagingCenter.Subscribe<MainPage, Plan>(this, "WeeklyPlannAdd", (sender, viewModel) => {
-                var plan = new Plan();
                 var planvm = new WeeklyPlanViewModel(viewModel);
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
@@ -55,7 +54,7 @@ namespace Planner.ViewModels
 
         void Reload()
         {
-            var all = App.Database.GetLastUpdates(5);
+            var all = App.Database.GetLastUpdatesWeeklyPlans(5);
 
             // HACK: this kinda breaks iOS "NSInternalInconsistencyException". Works fine in Android.
             //			Contents.Clear ();
