@@ -11,32 +11,41 @@ namespace Planner.Views
     {
         public DailyPlanCell()
         {
-            var startDateLabel = new Label
+            var descriptionLabel = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            startDateLabel.SetBinding(Label.TextProperty, "description");
+            descriptionLabel.SetBinding(Label.TextProperty, "Description");
 
             var categoryLabel = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            categoryLabel.SetBinding(Label.TextProperty, "category");
+            categoryLabel.SetBinding(Label.TextProperty, "Category");
 
-            var endDateLabel = new Label
+            var startDateLabel = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            endDateLabel.SetBinding(Label.TextProperty, "startDate");
+            startDateLabel.SetBinding(Label.TextProperty, "StartDate");
 
             var layout = new StackLayout
             {
                 Padding = new Thickness(20, 0, 0, 0),
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                Children = { startDateLabel, categoryLabel, endDateLabel }
+                Children = { descriptionLabel, categoryLabel, startDateLabel }
             };
+
             View = layout;
+        }
+        protected override void OnBindingContextChanged()
+        {
+            // Fixme : this is happening because the View.Parent is getting 
+            // set after the Cell gets the binding context set on it. Then it is inheriting
+            // the parents binding context.
+            View.BindingContext = BindingContext;
+            base.OnBindingContextChanged();
         }
     }
 }

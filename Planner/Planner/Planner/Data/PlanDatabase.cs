@@ -68,12 +68,30 @@ namespace Planner.Data
             }
         }
 
-        public IList<Plan> GetWeeklyPlans(Plan plan)
+        public IList<Plan> GetDailyPlans(Plan plan)
         {
             lock (locker)
             {
-                var weeklyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", new object[] { PlanEnumeration.PlanType.Daily, plan.startDate, plan.endDate });
-                return weeklyPlans.ToList();
+                //var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", new object[] { PlanEnumeration.PlanType.Daily, plan.startDate, plan.endDate });
+                var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? ", new object[] { PlanEnumeration.PlanType.Daily});
+                return dailyPlans.ToList();
+            }
+        }
+
+        public Plan GetWeeklyPlan(DateTime startDate, DateTime endDate)
+        {
+            lock (locker)
+            {
+                //var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", new object[] { PlanEnumeration.PlanType.Daily, plan.startDate, plan.endDate });
+                var plans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [startDate] = ? AND [endDate] = ? ", new object[] { startDate, endDate });
+
+                if (plans.Count > 1)
+                    throw new RankException("Can't exists more than one week with same dates");
+
+                if (plans.Count == 1)
+                    return plans[0];
+
+                return null;
             }
         }
 
@@ -112,6 +130,14 @@ namespace Planner.Data
             lock (locker)
             {
                 return SyncConnection.Delete<Plan>(id);
+            }
+        }
+
+        public int DeleteAllPlan()
+        {
+            lock (locker)
+            {
+                return SyncConnection.DeleteAll<Plan>();
             }
         }
 

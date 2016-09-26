@@ -49,64 +49,81 @@ namespace Planner.ViewModels
             private set { _minimunDate = value; }
         }
 
-        ObservableCollection<PlanViewModel> _weeklyPlans = new ObservableCollection<PlanViewModel>();
-        public ObservableCollection<PlanViewModel> WeeklyPlans
+        ObservableCollection<DailyPlanCellViewModel> _dailyPlans = new ObservableCollection<DailyPlanCellViewModel>();
+        public ObservableCollection<DailyPlanCellViewModel> DailyPlans
         {
-            get { return _weeklyPlans; }
+            get { return _dailyPlans; }
             set
             {
-                if (_weeklyPlans == value)
+                if (_dailyPlans == value)
                     return;
-                _weeklyPlans = value;
+                _dailyPlans = value;
                 OnPropertyChanged();
             }
         }
 
         public WeeklyPlanViewModel(Plan plan)
         {
-            MainText = "Weekly Plan!";
-            this.plan = plan;
-            this.Date = plan.startDate;
-            this.MinimunDate = DateTimeUtils.StartOfWeek(plan.startDate, dfi.FirstDayOfWeek);
 
             AddPlanCommand = new Command(AddPlan);
             CreateWeeklyPlanCommand = new Command(CreateWeeklyPlan);
 
-            var weeklyPlans = App.Database.GetWeeklyPlans(plan);
+            MainText = "Weekly Plan!";
+            InitializePlan(plan);
+            InitializeDailyPlan();
 
-            foreach (var t in weeklyPlans)
+            MessagingCenter.Subscribe<WeeklyPlanPage, Plan>(this, "WeeklyPlanCreated", (sender, viewModel) =>
             {
-                WeeklyPlans.Add(new PlanViewModel(t));
-            }
-
-            if (WeeklyPlans.Count == 0)
-                InitializeWeeklyPlan();
-
-            MessagingCenter.Subscribe<WeeklyPlanPage, Plan>(this, "WeeklyPlanCreated", (sender, viewModel) => {
                 Reload();
             });
 
-            MessagingCenter.Subscribe<WeeklyPlanPage, Plan>(this, "PlanAdd", (sender, viewModel) => {
+            MessagingCenter.Subscribe<WeeklyPlanPage, Plan>(this, "PlanAdded", (sender, viewModel) =>
+            {
                 var planvm = new PlanViewModel(viewModel);
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
 
-            MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, model) => {
+            MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, model) =>
+            {
                 App.Database.SavePlan(model);
                 Reload();
             });
         }
 
-        private void InitializeWeeklyPlan()
+        private void InitializePlan(Plan plan)
         {
-            var weeklyPlans = new List<PlanViewModel>();
+            Plan existsPlan = App.Database.GetWeeklyPlan(plan.startDate, plan.endDate);
+
+            if (existsPlan != null)
+            {
+                this.plan = existsPlan;
+                return;
+            }                
+
+            var startDate = DateTimeUtils.StartOfWeek(plan.startDate, dfi.FirstDayOfWeek);
+
+            this.plan = new Plan(startDate.ToString("dd/MM/yy"), startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
+            this.Date = startDate;
+            this.MinimunDate = startDate;
 
             App.Database.SavePlan(this.plan);
+        }
+
+        private void InitializeDailyPlan()
+        {
+            var weeklyPlans = App.Database.GetDailyPlans(plan);
+
+            foreach (var t in weeklyPlans)
+            {
+                DailyPlans.Add(new DailyPlanCellViewModel(t));
+            }
+
+            if (DailyPlans.Count == 0)
 
             for (int i = 0; i < 7; i++)
             {
-                Plan plan = new Plan(string.Empty, this.plan.startDate.AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
-                WeeklyPlans.Add(new PlanViewModel(plan));
+                Plan plan = new Plan(this.plan.startDate.AddDays(i).ToString("dd/MM/yy"), this.plan.startDate.AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
+                DailyPlans.Add(new DailyPlanCellViewModel(plan));
                 App.Database.SavePlan(plan);
             }
 
@@ -115,7 +132,7 @@ namespace Planner.ViewModels
 
         void Reload()
         {
-            var all = App.Database.GetWeeklyPlans(this.plan);
+            var all = App.Database.GetDailyPlans(this.plan);
 
             // HACK: this kinda breaks iOS "NSInternalInconsistencyException". Works fine in Android.
             //			Contents.Clear ();
@@ -124,12 +141,12 @@ namespace Planner.ViewModels
             //			}
 
             // HACK: this works in iOS.
-            var x = new ObservableCollection<PlanViewModel>();
+            var x = new ObservableCollection<DailyPlanCellViewModel>();
             foreach (var t in all)
             {
-                x.Add(new PlanViewModel(t));
+                x.Add(new DailyPlanCellViewModel(t));
             }
-            WeeklyPlans = x;
+            DailyPlans = x;
         }
 
         public void AddPlan()
@@ -195,7 +212,7 @@ namespace Planner.ViewModels
                 if (selectedItem != null)
                 {
 
-                    var todovm = new PlanViewModel(((PlanViewModel)selectedItem).Plan);
+                    var todovm = new PlanViewModel(((DailyPlanCellViewModel)selectedItem).Plan);
 
                     Navigation.Push(ViewFactory.CreatePage(todovm));
 

@@ -11,7 +11,7 @@ namespace Planner.Data
     {
         //IPlan GetPlan(Guid id);
         IList<Plan> GetLastUpdatesWeeklyPlans(int limit);
-        IList<Plan> GetWeeklyPlans(Plan plan);
+        IList<Plan> GetDailyPlans(Plan plan);
 
     }
 }

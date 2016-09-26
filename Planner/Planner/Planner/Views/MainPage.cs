@@ -27,21 +27,24 @@ namespace Planner.Views
             lastUpdateWeeklyPlansLV.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedWeeklyPlan", BindingMode.TwoWay));
             lastUpdateWeeklyPlansLV.ItemTemplate = new DataTemplate(typeof(WeeklyPlanCell));
 
+            var deleteAllButton = new Button { Text = "Delete database" };
+            deleteAllButton.SetBinding(Button.CommandProperty, "DeleteDatabaseCommand");
+
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Children = { lastUpdateWeeklyPlansLV }
+                Children = { lastUpdateWeeklyPlansLV, deleteAllButton }
             };
 
             var toolBarItem = new ToolbarItem("+", null, () => {
                 var tool = new Plan(PlanEnumeration.PlanType.Weekly);
-                MessagingCenter.Send(this, "WeeklyPlannAdd", tool);
+                MessagingCenter.Send(this, "WeeklyPlanCreate", tool);
             }, 0, 0);
             if (Device.OS == TargetPlatform.Android)
             { // BUG: Android doesn't support the icon being null
                 toolBarItem = new ToolbarItem("+", "plus", () => {
                     var tool = new Plan(PlanEnumeration.PlanType.Weekly);
-                    MessagingCenter.Send(this, "WeeklyPlannAdd", tool);
+                    MessagingCenter.Send(this, "WeeklyPlanCreate", tool);
                 }, 0, 0);
             }
             ToolbarItems.Add(toolBarItem);

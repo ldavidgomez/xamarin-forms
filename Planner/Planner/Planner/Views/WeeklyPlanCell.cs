@@ -11,20 +11,26 @@ namespace Planner.Views
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            startDateLabel.SetBinding(Label.TextProperty, "startDate");
+            startDateLabel.SetBinding(Label.TextProperty, "StartDate");
+
+            var separatorLabel = new Label
+            {
+                VerticalTextAlignment = TextAlignment.Center
+            };
+            separatorLabel.SetBinding(Label.TextProperty, "SeparatorChar");
 
             var endDateLabel = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            endDateLabel.SetBinding(Label.TextProperty, "endDate");
+            endDateLabel.SetBinding(Label.TextProperty, "EndDate");
 
             var layout = new StackLayout
             {
                 Padding = new Thickness(20, 0, 0, 0),
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                Children = { startDateLabel, endDateLabel }
+                Children = { startDateLabel, separatorLabel, endDateLabel }
             };
             View = layout;
         }

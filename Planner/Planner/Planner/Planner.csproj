@@ -48,8 +48,10 @@
     <Compile Include="ViewFactory.cs" />
     <Compile Include="ViewModelNavigation.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\DailyPlanCellViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlanViewModel.cs" />
+    <Compile Include="ViewModels\WeeklyPlanCellViewModel.cs" />
     <Compile Include="ViewModels\WeeklyPlanViewModel.cs" />
     <Compile Include="Views\DailyPlanCell.cs" />
     <Compile Include="Views\MainPage.cs" />
