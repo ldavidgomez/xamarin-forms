@@ -1,19 +1,23 @@
 ﻿using SQLite.Net.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using Planner.Utilities;
 
 namespace Planner.Model
 {
     public class Plan
     {
+        const string dateFormatToPersist = "yyyy-MM-dd HH:mm:ss";
+
         [PrimaryKey]
         public Guid id { get; set; }
         public string description { get; set; }
         public string category { get; set; }
         public PlanEnumeration.PlanType type { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
-        public DateTime lastUpdate { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+        public string lastUpdate { get; set; }
         List<Plan> planList;
 
         public int length {
@@ -39,27 +43,43 @@ namespace Planner.Model
             this.description = description;
             this.category = category;
             this.type = type;
-            this.startDate = startDate.Date;
-            setEndDay();
+            this.startDate = setStartDay(startDate);
+            this.endDate = setEndDay();
 
             this.planList = new List<Plan>();
-            this.lastUpdate = DateTime.Now;
+            this.lastUpdate = DateTime.Now.ToString(dateFormatToPersist);
         }
 
-        private void setEndDay()
+        private string setStartDay(DateTime date)
+        {
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            var startDate = DateTimeUtils.StartOfWeek(DateTime.Now, dfi.FirstDayOfWeek);
+
+            switch (this.type)
+            {
+                case PlanEnumeration.PlanType.Item:
+                case PlanEnumeration.PlanType.Plan:
+                case PlanEnumeration.PlanType.Daily:
+                    return date.Date.ToString(dateFormatToPersist);
+                case PlanEnumeration.PlanType.Weekly:
+                    return startDate.ToString(dateFormatToPersist);
+                default:
+                    throw new NotSupportedException("Not recognized Plan type");
+            }
+        }
+
+        private string setEndDay()
         {
             switch (this.type)
             {
                 case PlanEnumeration.PlanType.Item:
                 case PlanEnumeration.PlanType.Plan:
                 case PlanEnumeration.PlanType.Daily:
-                    this.endDate = this.startDate;
-                    break;
+                    return DateTime.Parse(this.startDate).ToString(dateFormatToPersist); ;
                 case PlanEnumeration.PlanType.Weekly:
-                    this.endDate = this.startDate.AddDays(7);
-                    break;
+                    return DateTime.Parse(this.startDate).AddDays(6).ToString(dateFormatToPersist);
                 default:
-                    break;
+                    throw new NotSupportedException("Not recognized Plan type");
             }
         }
 
@@ -68,7 +88,7 @@ namespace Planner.Model
             return this.description;
         }
 
-        public DateTime GetDate()
+        public string GetDate()
         {
             return this.startDate;
         }

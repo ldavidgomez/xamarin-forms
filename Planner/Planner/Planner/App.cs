@@ -12,6 +12,7 @@ namespace Planner
         public App()
         {
             Initialize();
+            //App.Database.DeleteAllPlan();
             MainPage = GetMainPage();
         }
 
@@ -27,6 +28,7 @@ namespace Planner
             ViewFactory.Register<MainPage, MainPageViewModel>();
             ViewFactory.Register<PlanPage, PlanViewModel>();
             ViewFactory.Register<WeeklyPlanPage, WeeklyPlanViewModel>();
+            ViewFactory.Register<DailyPlanPage, DailyPlanViewModel>();
         }
 
         public static Page GetMainPage()

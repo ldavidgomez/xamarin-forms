@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Planner.ViewModels
 {
-    class WeeklyPlanCellViewModel : BaseViewModel
+    class PlanCellViewModel
     {
         Plan plan;
         string dateFormat = "dd/MM/yy";
@@ -15,13 +15,13 @@ namespace Planner.ViewModels
 
         public Plan Plan { get { return plan; } }
 
-        public string StartDate { get { return DateTime.Parse(plan.startDate).Date.ToString(dateFormat); } }
+        public string Description { get { return plan.description; } }
 
-        public string SeparatorChar { get { return separatorChar; } }
+        public string Category { get { return plan.category; } }
 
         public string EndDate { get { return DateTime.Parse(plan.endDate).ToString(dateFormat); } }
 
-        public WeeklyPlanCellViewModel(Plan plan)
+        public PlanCellViewModel(Plan plan)
         {
             this.plan = plan;
         }

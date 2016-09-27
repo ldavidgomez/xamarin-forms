@@ -68,7 +68,7 @@ namespace Planner.ViewModels
             }
         }
 
-        public DateTime StartDate
+        public string StartDate
         {
             get { return plan.startDate; }
             set

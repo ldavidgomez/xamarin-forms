@@ -29,9 +29,10 @@ namespace Planner.Services
             //}
         }
 
-        public IList<Plan> GetWeeklyPlans(DateTime date)
+        public IList<Plan> GetWeeklyPlans(string date)
         {
-            return Database.Table<Plan>().Where(x => x.startDate <= date && x.endDate >= date.AddDays(7)).Where(x => x.id != Guid.Empty).Take(5).ToList<Plan>();
+            //return Database.Table<Plan>().Where(x => x.startDate <= date && x.endDate >= date.AddDays(7)).Where(x => x.id != Guid.Empty).Take(5).ToList<Plan>();
+            return null;
         }
 
         public IList<Plan> GetCategories()

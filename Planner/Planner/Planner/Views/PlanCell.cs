@@ -11,13 +11,13 @@ namespace Planner.Views
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            descriptionLabel.SetBinding(Label.TextProperty, "description");
+            descriptionLabel.SetBinding(Label.TextProperty, "Description");
 
             var dateLabel = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            dateLabel.SetBinding(Label.TextProperty, "date");
+            dateLabel.SetBinding(Label.TextProperty, "Date");
 
             //var tick = new Image
             //{

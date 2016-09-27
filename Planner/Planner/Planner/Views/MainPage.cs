@@ -1,4 +1,5 @@
 ﻿using Planner.Model;
+using Planner.Utilities;
 using Planner.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Planner.Views
     {
         public MainPage()
         {
+
             Padding = new Thickness(10);
 
             Title = " Default title";
@@ -36,7 +38,10 @@ namespace Planner.Views
                 Children = { lastUpdateWeeklyPlansLV, deleteAllButton }
             };
 
+            
+
             var toolBarItem = new ToolbarItem("+", null, () => {
+                //var tool = new Plan(startDate.ToString("dd/MM/yy"), startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
                 var tool = new Plan(PlanEnumeration.PlanType.Weekly);
                 MessagingCenter.Send(this, "WeeklyPlanCreate", tool);
             }, 0, 0);

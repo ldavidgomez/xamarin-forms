@@ -83,11 +83,10 @@ namespace Planner.ViewModels
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
 
-            MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, model) =>
-            {
-                App.Database.SavePlan(model);
-                Reload();
-            });
+            //MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, model) =>
+            //{
+            //    Reload();
+            //});
         }
 
         private void InitializePlan(Plan plan)
@@ -97,10 +96,11 @@ namespace Planner.ViewModels
             if (existsPlan != null)
             {
                 this.plan = existsPlan;
+                this.Date = DateTime.Parse(this.plan.startDate);
                 return;
             }                
 
-            var startDate = DateTimeUtils.StartOfWeek(plan.startDate, dfi.FirstDayOfWeek);
+            var startDate = DateTimeUtils.StartOfWeek(DateTime.Parse(plan.startDate), dfi.FirstDayOfWeek);
 
             this.plan = new Plan(startDate.ToString("dd/MM/yy"), startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
             this.Date = startDate;
@@ -119,12 +119,13 @@ namespace Planner.ViewModels
             }
 
             if (DailyPlans.Count == 0)
-
-            for (int i = 0; i < 7; i++)
             {
-                Plan plan = new Plan(this.plan.startDate.AddDays(i).ToString("dd/MM/yy"), this.plan.startDate.AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
-                DailyPlans.Add(new DailyPlanCellViewModel(plan));
-                App.Database.SavePlan(plan);
+                for (int i = 0; i < 7; i++)
+                {
+                    Plan plan = new Plan(DateTime.Parse(this.plan.startDate).AddDays(i).ToString(), DateTime.Parse(this.plan.startDate).AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
+                    DailyPlans.Add(new DailyPlanCellViewModel(plan));
+                    App.Database.SavePlan(plan);
+                }
             }
 
             Reload();
@@ -196,27 +197,27 @@ namespace Planner.ViewModels
             }
         }
 
-        object selectedItem;
-        public object SelectedItem
+        object selectedDailyPlan;
+        public object SelectedDailyPlan
         {
-            get { return selectedItem; }
+            get { return selectedDailyPlan; }
             set
             {
-                if (selectedItem == value)
+                if (selectedDailyPlan == value)
                     return;
                 // something was selected
-                selectedItem = value;
+                selectedDailyPlan = value;
 
                 OnPropertyChanged();
 
-                if (selectedItem != null)
+                if (selectedDailyPlan != null)
                 {
 
-                    var todovm = new PlanViewModel(((DailyPlanCellViewModel)selectedItem).Plan);
+                    var todovm = new DailyPlanViewModel(((DailyPlanCellViewModel)selectedDailyPlan).Plan);
 
                     Navigation.Push(ViewFactory.CreatePage(todovm));
 
-                    selectedItem = null;
+                    selectedDailyPlan = null;
                 }
             }
         }

@@ -72,18 +72,36 @@ namespace Planner.Data
         {
             lock (locker)
             {
-                //var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", new object[] { PlanEnumeration.PlanType.Daily, plan.startDate, plan.endDate });
-                var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? ", new object[] { PlanEnumeration.PlanType.Daily});
+                var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] >= ? AND [endDate] <= ? ", new object[] { PlanEnumeration.PlanType.Daily, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
+                //var dailyPlans = GetPlans(plan, PlanEnumeration.PlanType.Daily);
                 return dailyPlans.ToList();
             }
         }
+        public IList<Plan> GetItems(Plan plan)
+        {
+            lock (locker)
+            {
+                var items = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] = ? AND [endDate] = ? ", new object[] { PlanEnumeration.PlanType.Item, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
+                //var items = GetPlans(plan, PlanEnumeration.PlanType.Item);
+                return items.ToList();
+            }
+        }
 
-        public Plan GetWeeklyPlan(DateTime startDate, DateTime endDate)
+        IList<Plan> GetPlans(Plan plan, PlanEnumeration.PlanType planType)
+        {
+            lock (locker)
+            {
+                var plans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] = ? AND [endDate] = ? ", new object[] { planType, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
+                return plans.ToList();
+            }
+        }
+
+        public Plan GetWeeklyPlan(string startDate, string endDate)
         {
             lock (locker)
             {
                 //var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] <= ?  AND [endDate] >= ? ORDER BY [startDate] DESC", new object[] { PlanEnumeration.PlanType.Daily, plan.startDate, plan.endDate });
-                var plans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [startDate] = ? AND [endDate] = ? ", new object[] { startDate, endDate });
+                var plans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] = ? AND [endDate] = ? ", new object[] { PlanEnumeration.PlanType.Weekly, DateTime.Parse(startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(endDate).ToString("yyyy-MM-dd HH:mm:ss") });
 
                 if (plans.Count > 1)
                     throw new RankException("Can't exists more than one week with same dates");

@@ -10,31 +10,26 @@ namespace Planner.Views
     public class DailyPlanCell : ViewCell
     {
         public DailyPlanCell()
-        {
-            var descriptionLabel = new Label
-            {
-                VerticalTextAlignment = TextAlignment.Center
-            };
-            descriptionLabel.SetBinding(Label.TextProperty, "Description");
-
-            var categoryLabel = new Label
-            {
-                VerticalTextAlignment = TextAlignment.Center
-            };
-            categoryLabel.SetBinding(Label.TextProperty, "Category");
-
+        {          
             var startDateLabel = new Label
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
             startDateLabel.SetBinding(Label.TextProperty, "StartDate");
 
+            var Plans = new ListView();
+            Plans.RowHeight = 40;
+            Plans.SetBinding(ListView.ItemsSourceProperty, "Plans");
+            Plans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedPlan", BindingMode.TwoWay));
+            Plans.ItemTemplate = new DataTemplate(typeof(PlanCell));
+
             var layout = new StackLayout
             {
                 Padding = new Thickness(20, 0, 0, 0),
-                Orientation = StackOrientation.Horizontal,
+                Orientation = StackOrientation.Vertical,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                Children = { descriptionLabel, categoryLabel, startDateLabel }
+                Children = { startDateLabel, Plans }
+                //Children = { descriptionLabel, categoryLabel, startDateLabel }
             };
 
             View = layout;

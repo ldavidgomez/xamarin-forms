@@ -33,7 +33,7 @@ namespace Planner.Views
             var DailyPlans = new ListView();
             DailyPlans.RowHeight = 40;
             DailyPlans.SetBinding(ListView.ItemsSourceProperty, "DailyPlans");
-            DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDayPlan", BindingMode.TwoWay));
+            DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDailyPlan", BindingMode.TwoWay));
             DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
 
             Content = new StackLayout
