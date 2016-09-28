@@ -76,11 +76,16 @@ namespace Planner.ViewModels
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
 
-            MessagingCenter.Subscribe<MainPage, Plan>(this, "WeeklyPlanCreate", (sender, viewModel) => {
+            MessagingCenter.Subscribe<MainPage, Plan>(this, "CreateWeeklyPlan", (sender, viewModel) => {
                 var planvm = new WeeklyPlanViewModel(viewModel);
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
-            
+
+            MessagingCenter.Subscribe<WeeklyPlanViewModel, Plan>(this, "WeeklyPlanCreated", (sender, viewModel) =>
+            {
+                Reload();
+            });
+
         }
 
         private void DeleteDatabase()
@@ -106,6 +111,15 @@ namespace Planner.ViewModels
                 x.Add(new WeeklyPlanCellViewModel(t));
             }
             LastUpdateWeeklyPlans = x;
+
+
+            all = App.Database.GetAll();
+            x = new ObservableCollection<WeeklyPlanCellViewModel>();
+            foreach (var t in all)
+            {
+                x.Add(new WeeklyPlanCellViewModel(t));
+            }
+            All = x;
         }
 
         object selectedWeeklyPlan;
@@ -129,6 +143,7 @@ namespace Planner.ViewModels
                     Navigation.Push(ViewFactory.CreatePage(todovm));
 
                     selectedWeeklyPlan = null;
+                    OnPropertyChanged();
                 }
             }
         }

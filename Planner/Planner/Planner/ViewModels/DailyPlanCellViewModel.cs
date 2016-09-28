@@ -44,7 +44,7 @@ namespace Planner.ViewModels
 
         private void InitializePlans()
         {
-            var plans = App.Database.GetDailyPlans(plan);
+            var plans = App.Database.GetPlans(plan);
 
             foreach (var t in plans)
             {
@@ -56,7 +56,7 @@ namespace Planner.ViewModels
 
         void Reload()
         {
-            var all = App.Database.GetDailyPlans(plan);
+            var all = App.Database.GetPlans(plan);
 
             // HACK: this kinda breaks iOS "NSInternalInconsistencyException". Works fine in Android.
             //			Contents.Clear ();

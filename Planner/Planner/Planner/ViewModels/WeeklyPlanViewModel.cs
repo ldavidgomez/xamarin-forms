@@ -107,6 +107,7 @@ namespace Planner.ViewModels
             this.MinimunDate = startDate;
 
             App.Database.SavePlan(this.plan);
+            MessagingCenter.Send(this, "WeeklyPlanCreated", plan);
         }
 
         private void InitializeDailyPlan()
@@ -125,6 +126,7 @@ namespace Planner.ViewModels
                     Plan plan = new Plan(DateTime.Parse(this.plan.startDate).AddDays(i).ToString(), DateTime.Parse(this.plan.startDate).AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
                     DailyPlans.Add(new DailyPlanCellViewModel(plan));
                     App.Database.SavePlan(plan);
+                    MessagingCenter.Send(this, "DailyPlanCreated", plan);
                 }
             }
 
@@ -218,6 +220,7 @@ namespace Planner.ViewModels
                     Navigation.Push(ViewFactory.CreatePage(todovm));
 
                     selectedDailyPlan = null;
+                    OnPropertyChanged();
                 }
             }
         }

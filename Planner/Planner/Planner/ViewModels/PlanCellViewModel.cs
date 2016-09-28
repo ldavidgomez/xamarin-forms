@@ -12,7 +12,6 @@ namespace Planner.ViewModels
     {
         Plan plan;
         string dateFormat = "dd/MM/yy";
-        string separatorChar = "-";
 
         public Plan Plan { get { return plan; } }
 

@@ -48,13 +48,13 @@ namespace Planner.Views
             var toolBarItem = new ToolbarItem("+", null, () => {
                 //var tool = new Plan(startDate.ToString("dd/MM/yy"), startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
                 var tool = new Plan(PlanEnumeration.PlanType.Weekly);
-                MessagingCenter.Send(this, "WeeklyPlanCreate", tool);
+                MessagingCenter.Send(this, "CreateWeeklyPlan", tool);
             }, 0, 0);
             if (Device.OS == TargetPlatform.Android)
             { // BUG: Android doesn't support the icon being null
                 toolBarItem = new ToolbarItem("+", "plus", () => {
                     var tool = new Plan(PlanEnumeration.PlanType.Weekly);
-                    MessagingCenter.Send(this, "WeeklyPlanCreate", tool);
+                    MessagingCenter.Send(this, "CreateWeeklyPlan", tool);
                 }, 0, 0);
             }
             ToolbarItems.Add(toolBarItem);

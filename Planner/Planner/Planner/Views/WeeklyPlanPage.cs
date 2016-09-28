@@ -15,7 +15,7 @@ namespace Planner.Views
         {
             Padding = new Thickness(10);
 
-            Title = " Default title";
+            Title = "Weekly Plan!";
             this.SetBinding(TitleProperty, "MainText");
 
             NavigationPage.SetHasNavigationBar(this, true);
@@ -26,12 +26,8 @@ namespace Planner.Views
             datePicker.SetBinding(DatePicker.MinimumDateProperty, "MinimunDate");
             datePicker.SetBinding(DatePicker.DateProperty, "Date");
 
-            var createWeeklyPlanButton = new Button { Text = "Create" };
-            createWeeklyPlanButton.SetBinding(Button.CommandProperty, "AddPlanCommand");
-
-
             var DailyPlans = new ListView();
-            DailyPlans.RowHeight = 40;
+            DailyPlans.VerticalOptions = LayoutOptions.StartAndExpand;
             DailyPlans.SetBinding(ListView.ItemsSourceProperty, "DailyPlans");
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDailyPlan", BindingMode.TwoWay));
             DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
@@ -39,7 +35,7 @@ namespace Planner.Views
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Children = { datePicker, createWeeklyPlanButton, DailyPlans }
+                Children = { datePicker, DailyPlans }
             };
         }
     }

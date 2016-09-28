@@ -1,6 +1,7 @@
-﻿    using Planner.Model;
+﻿using Planner.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Planner.ViewModels
         Plan plan;
         ICommand _saveCommand, _deleteCommand, _cancelCommand;
 
+        const string dateFormatToPersist = "yyyy-MM-dd HH:mm:ss";
         const string dateFormat = "dd/MM/yy";
 
         public PlanViewModel(Plan plan)
@@ -77,7 +79,7 @@ namespace Planner.ViewModels
             {
                 if (plan.startDate == value)
                     return;
-                plan.startDate = value;
+                plan.startDate = DateTime.Parse(value).ToString(dateFormatToPersist);
                 OnPropertyChanged();
             }
         }

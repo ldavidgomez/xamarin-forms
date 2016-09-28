@@ -25,6 +25,11 @@ namespace Planner.ViewModels
             private set { _mainText = value; }
         }
 
+        public string StartDate
+        {
+            get { return plan.startDate; }
+        }
+
         ObservableCollection<PlanCellViewModel> _plans = new ObservableCollection<PlanCellViewModel>();
         public ObservableCollection<PlanCellViewModel> Plans
         {
@@ -43,7 +48,7 @@ namespace Planner.ViewModels
             CreatePlanCommand = new Command(CreatePlan);
             //CreateWeeklyPlanCommand = new Command(CreateWeeklyPlan);
 
-            MainText = "Daily Plan!";
+            MainText = DateTime.Parse(plan.startDate).ToString("dd/MM/yyyy");
             this.plan = plan;
             GetPlans();
 
@@ -54,6 +59,8 @@ namespace Planner.ViewModels
             });
 
             MessagingCenter.Subscribe<DailyPlanPage, Plan>(this, "CreatePlan", (sender, viewModel) => {
+                viewModel.startDate = StartDate;
+                viewModel.endDate = StartDate;
                 var planvm = new PlanViewModel(viewModel);
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
@@ -62,7 +69,7 @@ namespace Planner.ViewModels
 
         void GetPlans()
         {
-            var all = App.Database.GetDailyPlans(this.plan);
+            var all = App.Database.GetPlans(this.plan);
 
             // HACK: this kinda breaks iOS "NSInternalInconsistencyException". Works fine in Android.
             //			Contents.Clear ();
@@ -119,6 +126,7 @@ namespace Planner.ViewModels
                     Navigation.Push(ViewFactory.CreatePage(todovm));
 
                     selectedPlan = null;
+                    OnPropertyChanged();
                 }
             }
         }

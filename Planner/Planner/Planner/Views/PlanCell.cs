@@ -17,12 +17,12 @@ namespace Planner.Views
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            dateLabel.SetBinding(Label.TextProperty, "Date");
+            dateLabel.SetBinding(Label.TextProperty, "Category");
 
-            var Plans = new ListView();
-            Plans.RowHeight = 40;
-            Plans.SetBinding(ListView.ItemsSourceProperty, "Plans");
-            Plans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedPlan", BindingMode.TwoWay));
+            //var Plans = new ListView();
+            //Plans.RowHeight = 40;
+            //Plans.SetBinding(ListView.ItemsSourceProperty, "Plans");
+            //Plans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedPlan", BindingMode.TwoWay));
             //Plans.ItemTemplate = new DataTemplate(typeof(PlanCell));
 
             //var tick = new Image
