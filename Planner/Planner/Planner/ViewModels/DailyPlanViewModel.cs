@@ -1,4 +1,5 @@
 ﻿using Planner.Model;
+using Planner.Utilities;
 using Planner.Views;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,9 @@ namespace Planner.ViewModels
             }
         }
 
+        ObservableCollection<PlanCellViewModel> _plansGrouped = new ObservableCollection<PlanCellViewModel>();
+        public ObservableCollection<Grouping<string, PlanCellViewModel>> PlansGrouped { get; set; }
+
         public DailyPlanViewModel(Plan plan)
         {
             CreatePlanCommand = new Command(CreatePlan);
@@ -84,6 +88,16 @@ namespace Planner.ViewModels
                 x.Add(new PlanCellViewModel(t));
             }
             Plans = x;
+
+            if (Plans.Count > 0)
+            {
+                var sorted = from plan in Plans
+                             orderby plan.StartDate
+                             group plan by plan.Category into planGroup
+                             select new Grouping<string, PlanCellViewModel>(planGroup.Key, planGroup);
+
+                PlansGrouped = new ObservableCollection<Grouping<string, PlanCellViewModel>>(sorted);
+            }
         }
 
         public void CreatePlan()

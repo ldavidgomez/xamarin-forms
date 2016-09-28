@@ -12,6 +12,7 @@ namespace Planner.ViewModels
     {
         Plan plan;
         string dateFormat = "dd/MM/yy";
+        const string dateFormatToPersist = "yyyy-MM-dd HH:mm:ss";
 
         public Plan Plan { get { return plan; } }
 
@@ -19,7 +20,7 @@ namespace Planner.ViewModels
 
         public string Category { get { return plan.category; } }
 
-        public string EndDate { get { return DateTime.Parse(plan.endDate).ToString(dateFormat); } }
+        public string StartDate { get { return DateTime.Parse(plan.startDate).ToString(dateFormatToPersist); } }
 
         ObservableCollection<PlanViewModel> _plans = new ObservableCollection<PlanViewModel>();
         public ObservableCollection<PlanViewModel> Plans
