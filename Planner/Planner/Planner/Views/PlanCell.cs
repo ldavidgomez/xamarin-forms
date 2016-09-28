@@ -19,6 +19,12 @@ namespace Planner.Views
             };
             dateLabel.SetBinding(Label.TextProperty, "Date");
 
+            var Plans = new ListView();
+            Plans.RowHeight = 40;
+            Plans.SetBinding(ListView.ItemsSourceProperty, "Plans");
+            Plans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedPlan", BindingMode.TwoWay));
+            //Plans.ItemTemplate = new DataTemplate(typeof(PlanCell));
+
             //var tick = new Image
             //{
             //    Source = FileImageSource.FromFile("check"),

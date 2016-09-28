@@ -25,12 +25,18 @@ namespace Planner.Views
             };
             endDateLabel.SetBinding(Label.TextProperty, "EndDate");
 
+            var typeLabel = new Label
+            {
+                VerticalTextAlignment = TextAlignment.Center
+            };
+            endDateLabel.SetBinding(Label.TextProperty, "PlanType");
+
             var layout = new StackLayout
             {
                 Padding = new Thickness(20, 0, 0, 0),
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                Children = { startDateLabel, separatorLabel, endDateLabel }
+                Children = { startDateLabel, separatorLabel, endDateLabel, typeLabel }
             };
             View = layout;
         }

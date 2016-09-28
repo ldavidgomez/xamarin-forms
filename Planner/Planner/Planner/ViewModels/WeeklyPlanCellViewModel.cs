@@ -21,6 +21,7 @@ namespace Planner.ViewModels
 
         public string EndDate { get { return DateTime.Parse(plan.endDate).ToString(dateFormat); } }
 
+        public string PlanType { get { return plan.type.ToString(); } }
         public WeeklyPlanCellViewModel(Plan plan)
         {
             this.plan = plan;

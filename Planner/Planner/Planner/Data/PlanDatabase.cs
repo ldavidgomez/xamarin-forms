@@ -68,6 +68,15 @@ namespace Planner.Data
             }
         }
 
+        public IList<Plan> GetAll()
+        {
+            lock (locker)
+            {
+                var all = SyncConnection.Query<Plan>("SELECT * FROM [Plan] ORDER BY [lastUpdate] DESC");
+                return all.ToList();
+            }
+        }
+
         public IList<Plan> GetDailyPlans(Plan plan)
         {
             lock (locker)
@@ -77,13 +86,13 @@ namespace Planner.Data
                 return dailyPlans.ToList();
             }
         }
-        public IList<Plan> GetItems(Plan plan)
+        public IList<Plan> GetPlans(Plan plan)
         {
             lock (locker)
             {
-                var items = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] = ? AND [endDate] = ? ", new object[] { PlanEnumeration.PlanType.Item, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
+                var plans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] = ? AND [endDate] = ? ", new object[] { PlanEnumeration.PlanType.Plan, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
                 //var items = GetPlans(plan, PlanEnumeration.PlanType.Item);
-                return items.ToList();
+                return plans.ToList();
             }
         }
 

@@ -1,13 +1,14 @@
 ﻿using Planner.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Planner.ViewModels
 {
-    class PlanCellViewModel
+    class PlanCellViewModel : BaseViewModel
     {
         Plan plan;
         string dateFormat = "dd/MM/yy";
@@ -21,9 +22,42 @@ namespace Planner.ViewModels
 
         public string EndDate { get { return DateTime.Parse(plan.endDate).ToString(dateFormat); } }
 
+        ObservableCollection<PlanViewModel> _plans = new ObservableCollection<PlanViewModel>();
+        public ObservableCollection<PlanViewModel> Plans
+        {
+            get { return _plans; }
+            set
+            {
+                if (_plans == value)
+                    return;
+                _plans = value;
+                OnPropertyChanged();
+            }
+        }
+
         public PlanCellViewModel(Plan plan)
         {
             this.plan = plan;
+            GetPlans();
+        }
+
+        private void GetPlans()
+        {
+            var all = App.Database.GetPlans(plan);
+
+            // HACK: this kinda breaks iOS "NSInternalInconsistencyException". Works fine in Android.
+            //			Contents.Clear ();
+            //			foreach (var t in all) {
+            //				Contents.Add (new TodoItemCellViewModel (t));
+            //			}
+
+            // HACK: this works in iOS.
+            var x = new ObservableCollection<PlanViewModel>();
+            foreach (var t in all)
+            {
+                x.Add(new PlanViewModel(t));
+            }
+            Plans = x;
         }
     }
 }

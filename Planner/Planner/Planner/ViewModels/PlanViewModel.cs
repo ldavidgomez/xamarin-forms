@@ -14,6 +14,8 @@ namespace Planner.ViewModels
         Plan plan;
         ICommand _saveCommand, _deleteCommand, _cancelCommand;
 
+        const string dateFormat = "dd/MM/yy";
+
         public PlanViewModel(Plan plan)
         {
             MainText = "New Plan!";
@@ -70,7 +72,7 @@ namespace Planner.ViewModels
 
         public string StartDate
         {
-            get { return plan.startDate; }
+            get { return DateTime.Parse(plan.startDate).Date.ToString(dateFormat); }
             set
             {
                 if (plan.startDate == value)
@@ -115,6 +117,31 @@ namespace Planner.ViewModels
                     return;
                 _cancelCommand = value;
                 OnPropertyChanged();
+            }
+        }
+
+        object selectedPlan;
+        public object SelectedPlan
+        {
+            get { return selectedPlan; }
+            set
+            {
+                if (selectedPlan == value)
+                    return;
+                // something was selected
+                selectedPlan = value;
+
+                OnPropertyChanged();
+
+                if (selectedPlan != null)
+                {
+
+                    var todovm = new PlanViewModel(((PlanViewModel)selectedPlan).Plan);
+
+                    Navigation.Push(ViewFactory.CreatePage(todovm));
+
+                    selectedPlan = null;
+                }
             }
         }
     }

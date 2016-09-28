@@ -38,6 +38,19 @@ namespace Planner.ViewModels
             }
         }
 
+        ObservableCollection<WeeklyPlanCellViewModel> _all = new ObservableCollection<WeeklyPlanCellViewModel>();
+        public ObservableCollection<WeeklyPlanCellViewModel> All
+        {
+            get { return _all; }
+            set
+            {
+                if (_all == value)
+                    return;
+                _all = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainPageViewModel()
         {
             _deleteDatabaseCommand = new Command(DeleteDatabase);
@@ -49,6 +62,13 @@ namespace Planner.ViewModels
             foreach (var t in lastUpdateWeeklyPlans)
             {
                 LastUpdateWeeklyPlans.Add(new WeeklyPlanCellViewModel(t));
+            }
+
+            var all = App.Database.GetAll();
+
+            foreach (var t in all)
+            {
+                All.Add(new WeeklyPlanCellViewModel(t));
             }
 
             MessagingCenter.Subscribe<MainPage, Plan>(this, "SelectedDayPlan", (sender, viewModel) => {

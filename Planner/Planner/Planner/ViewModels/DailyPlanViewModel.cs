@@ -49,6 +49,7 @@ namespace Planner.ViewModels
 
             MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, viewModel) =>
             {
+                App.Database.SavePlan(viewModel);
                 GetPlans();
             });
 

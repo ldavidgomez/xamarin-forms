@@ -23,7 +23,7 @@ namespace Planner.Views
             DailyPlans.RowHeight = 40;
             DailyPlans.SetBinding(ListView.ItemsSourceProperty, "Plans");
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedPlan", BindingMode.TwoWay));
-            DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
+            DailyPlans.ItemTemplate = new DataTemplate(typeof(PlanCell));
 
             Content = new StackLayout
             {
@@ -34,13 +34,13 @@ namespace Planner.Views
 
             var toolBarItem = new ToolbarItem("+", null, () => {
                 //var tool = new Plan(startDate.ToString("dd/MM/yy"), startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
-                var tool = new Plan(PlanEnumeration.PlanType.Item);
+                var tool = new Plan(PlanEnumeration.PlanType.Plan);
                 MessagingCenter.Send(this, "CreatePlan", tool);
             }, 0, 0);
             if (Device.OS == TargetPlatform.Android)
             { // BUG: Android doesn't support the icon being null
                 toolBarItem = new ToolbarItem("+", "plus", () => {
-                    var tool = new Plan(PlanEnumeration.PlanType.Item);
+                    var tool = new Plan(PlanEnumeration.PlanType.Plan);
                     MessagingCenter.Send(this, "CreatePlan", tool);
                 }, 0, 0);
             }
