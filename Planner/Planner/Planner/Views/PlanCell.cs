@@ -7,17 +7,21 @@ namespace Planner.Views
     {
         public PlanCell()
         {
+            
+
             var descriptionLabel = new Label
             {
-                VerticalTextAlignment = TextAlignment.Center
+                VerticalTextAlignment = TextAlignment.Center,
+                HeightRequest = 40,
+                Margin = new Thickness(20, 0, 0, 0)
             };
             descriptionLabel.SetBinding(Label.TextProperty, "Description");
 
-            var dateLabel = new Label
-            {
-                VerticalTextAlignment = TextAlignment.Center
-            };
-            dateLabel.SetBinding(Label.TextProperty, "Category");
+            //var dateLabel = new Label
+            //{
+            //    VerticalTextAlignment = TextAlignment.Center
+            //};
+            //dateLabel.SetBinding(Label.TextProperty, "Category");
 
             //var Plans = new ListView();
             //Plans.RowHeight = 40;
@@ -36,7 +40,7 @@ namespace Planner.Views
                 Padding = new Thickness(20, 0, 0, 0),
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                Children = { descriptionLabel, dateLabel }
+                Children = { descriptionLabel }
             };
             View = layout;
         }
