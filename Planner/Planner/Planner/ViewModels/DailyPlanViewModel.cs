@@ -44,8 +44,8 @@ namespace Planner.ViewModels
             }
         }
 
-        ObservableCollection<PlanCellViewModel> _plansGrouped = new ObservableCollection<PlanCellViewModel>();
-        ObservableCollection<Grouping<string, PlanCellViewModel>> PlansGrouped { get; set; }
+        //ObservableCollection<PlanCellViewModel> _plansGrouped = new ObservableCollection<PlanCellViewModel>();
+        public ObservableCollection<Grouping<string, PlanCellViewModel>> PlansGrouped { get; set; }
 
         public DailyPlanViewModel(Plan plan)
         {

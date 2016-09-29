@@ -62,6 +62,8 @@ namespace Planner.ViewModels
             }
         }
 
+        public ObservableCollection<Grouping<string, DailyPlanCellViewModel>> DailyPlansGrouped { get; set; }
+
         public WeeklyPlanViewModel(Plan plan)
         {
 
@@ -74,7 +76,8 @@ namespace Planner.ViewModels
 
             MessagingCenter.Subscribe<WeeklyPlanPage, Plan>(this, "WeeklyPlanCreated", (sender, viewModel) =>
             {
-                Reload();
+                //Reload();
+                InitializeDailyPlan();
             });
 
             MessagingCenter.Subscribe<WeeklyPlanPage, Plan>(this, "PlanAdded", (sender, viewModel) =>
@@ -110,9 +113,54 @@ namespace Planner.ViewModels
             MessagingCenter.Send(this, "WeeklyPlanCreated", plan);
         }
 
+        //private void InitializeDailyPlan()
+        //{
+        //    var weeklyPlans = App.Database.GetDailyPlans(plan);
+
+        //    foreach (var t in weeklyPlans)
+        //    {
+        //        DailyPlans.Add(new DailyPlanCellViewModel(t));
+        //    }
+
+        //    if (DailyPlans.Count == 0)
+        //    {
+        //        for (int i = 0; i < 7; i++)
+        //        {
+        //            Plan plan = new Plan(DateTime.Parse(this.plan.startDate).AddDays(i).ToString(), DateTime.Parse(this.plan.startDate).AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
+        //            DailyPlans.Add(new DailyPlanCellViewModel(plan));
+        //            App.Database.SavePlan(plan);
+        //            MessagingCenter.Send(this, "DailyPlanCreated", plan);
+        //        }
+        //    }
+        //    //else
+        //    //{
+        //    //    for (int i = 0; i < DailyPlans.Count; i++)
+        //    //    {
+        //    //        var plans = App.Database.GetPlans(DailyPlans[i].Plan);
+
+        //    //        foreach (Plan item in plans)
+        //    //        {
+        //    //            DailyPlans[i].Plan.AddPlan(item);
+        //    //        }
+        //    //    }
+        //    //}
+
+        //    if (DailyPlans.Count > 0)
+        //    {
+        //        var sorted = from plan in DailyPlans
+        //                     orderby DateTime.Parse(plan.StartDate).ToString("yyyyMMdd")
+        //                     group plan by plan.StartDate into dailyPlanGroup
+        //                     select new Grouping<string, DailyPlanCellViewModel>(dailyPlanGroup.Key, dailyPlanGroup);
+
+        //        DailyPlansGrouped = new ObservableCollection<Grouping<string, DailyPlanCellViewModel>>(sorted);
+        //    }
+
+        //    //Reload();
+        //}
+
         private void InitializeDailyPlan()
         {
-            var weeklyPlans = App.Database.GetDailyPlans(plan);
+            var weeklyPlans = App.Database.GetDailyPlansFromWeek(plan);
 
             foreach (var t in weeklyPlans)
             {
@@ -130,7 +178,17 @@ namespace Planner.ViewModels
                 }
             }
 
-            Reload();
+            if (DailyPlans.Count > 0)
+            {
+                var sorted = from plan in DailyPlans
+                             orderby DateTime.Parse(plan.StartDate).ToString("yyyyMMdd")
+                             group plan by plan.StartDate into dailyPlanGroup
+                             select new Grouping<string, DailyPlanCellViewModel>(dailyPlanGroup.Key, dailyPlanGroup);
+
+                DailyPlansGrouped = new ObservableCollection<Grouping<string, DailyPlanCellViewModel>>(sorted);
+            }
+
+            //Reload();
         }
 
         void Reload()
@@ -162,7 +220,8 @@ namespace Planner.ViewModels
 
         public void CreateWeeklyPlan()
         {
-            Reload();
+            //Reload();
+            InitializeDailyPlan();
         }
         //public void Save()
         //{

@@ -17,7 +17,9 @@ namespace Planner.ViewModels
 
         public Plan Plan { get { return plan; } }
 
-        public string Description { get { return plan.startDate; } }
+        public PlanEnumeration.PlanType type { get { return plan.type; } }
+
+        public string Description { get { return plan.description; } }
 
         public string Category { get { return plan.category; } }
 

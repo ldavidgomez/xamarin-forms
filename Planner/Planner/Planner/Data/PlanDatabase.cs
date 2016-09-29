@@ -86,6 +86,17 @@ namespace Planner.Data
                 return dailyPlans.ToList();
             }
         }
+
+        public IList<Plan> GetDailyPlansFromWeek(Plan plan)
+        {
+            lock (locker)
+            {
+                var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] >= ? AND [endDate] <= ? ", new object[] { PlanEnumeration.PlanType.Plan, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
+                //var dailyPlans = GetPlans(plan, PlanEnumeration.PlanType.Daily);
+                return dailyPlans.ToList();
+            }
+        }
+
         public IList<Plan> GetPlans(Plan plan)
         {
             lock (locker)

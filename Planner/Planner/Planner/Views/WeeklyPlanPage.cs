@@ -28,7 +28,12 @@ namespace Planner.Views
 
             var DailyPlans = new ListView();
             DailyPlans.VerticalOptions = LayoutOptions.StartAndExpand;
-            DailyPlans.SetBinding(ListView.ItemsSourceProperty, "DailyPlans");
+            //DailyPlans.SetBinding(ListView.ItemsSourceProperty, "DailyPlans");
+            DailyPlans.SetBinding(ListView.ItemsSourceProperty, "DailyPlansGrouped");
+            DailyPlans.HasUnevenRows = true;
+            DailyPlans.GroupShortNameBinding = new Binding("Key");
+            DailyPlans.IsGroupingEnabled = true;
+            DailyPlans.GroupDisplayBinding = new Binding("Key");
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDailyPlan", BindingMode.TwoWay));
             DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
 

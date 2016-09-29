@@ -28,7 +28,7 @@ namespace Planner.Views
             DailyPlans.IsGroupingEnabled = true;
             DailyPlans.GroupDisplayBinding = new Binding("Key");
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedPlan", BindingMode.TwoWay));
-            DailyPlans.ItemTemplate = new DataTemplate(typeof(PlanCell));
+            DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
 
             Content = new StackLayout
             {

@@ -18,7 +18,7 @@ namespace Planner.Model
         public string startDate { get; set; }
         public string endDate { get; set; }
         public string lastUpdate { get; set; }
-        List<Plan> planList;
+        List<Plan> planList = new List<Plan>();
 
         public int length {
             get
