@@ -91,7 +91,7 @@ namespace Planner.Data
         {
             lock (locker)
             {
-                var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] >= ? AND [endDate] <= ? ", new object[] { PlanEnumeration.PlanType.Plan, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
+                var dailyPlans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE ([type] = ? OR [type] = ?) AND [startDate] >= ? AND [endDate] <= ? ", new object[] { PlanEnumeration.PlanType.Daily, PlanEnumeration.PlanType.Plan, DateTime.Parse(plan.startDate).ToString("yyyy-MM-dd HH:mm:ss"), DateTime.Parse(plan.endDate).ToString("yyyy-MM-dd HH:mm:ss") });
                 //var dailyPlans = GetPlans(plan, PlanEnumeration.PlanType.Daily);
                 return dailyPlans.ToList();
             }

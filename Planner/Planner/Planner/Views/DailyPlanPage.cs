@@ -33,6 +33,7 @@ namespace Planner.Views
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
+                BackgroundColor = Color.Aqua,
                 Children = { DailyPlans }
             };
 

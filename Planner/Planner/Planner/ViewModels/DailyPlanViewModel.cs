@@ -31,6 +31,11 @@ namespace Planner.ViewModels
             get { return plan.startDate; }
         }
 
+        public string Day1
+        {
+            get { return plan.startDate; }
+        }
+
         ObservableCollection<PlanCellViewModel> _plans = new ObservableCollection<PlanCellViewModel>();
         public ObservableCollection<PlanCellViewModel> Plans
         {

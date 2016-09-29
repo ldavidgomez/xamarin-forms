@@ -33,7 +33,7 @@ namespace Planner.Views
             DailyPlans.HasUnevenRows = true;
             DailyPlans.GroupShortNameBinding = new Binding("Key");
             DailyPlans.IsGroupingEnabled = true;
-            DailyPlans.GroupDisplayBinding = new Binding("Key");
+            //DailyPlans.GroupDisplayBinding = new Binding("Key");
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDailyPlan", BindingMode.TwoWay));
             DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
 
@@ -44,6 +44,8 @@ namespace Planner.Views
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
+                Orientation =StackOrientation.Vertical,
+                Padding = 5,
                 Children = { datePicker, DailyPlans }
             };
         }

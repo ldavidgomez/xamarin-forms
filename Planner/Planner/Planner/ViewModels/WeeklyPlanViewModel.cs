@@ -185,7 +185,25 @@ namespace Planner.ViewModels
                              group plan by plan.StartDate into dailyPlanGroup
                              select new Grouping<string, DailyPlanCellViewModel>(dailyPlanGroup.Key, dailyPlanGroup);
 
+
                 DailyPlansGrouped = new ObservableCollection<Grouping<string, DailyPlanCellViewModel>>(sorted);
+
+                foreach (var item in DailyPlansGrouped)
+                {
+                    DailyPlanCellViewModel daily = null;
+
+                    foreach (var subItem in item)
+                    {
+
+                        if (subItem.type.Equals(PlanEnumeration.PlanType.Daily))
+                        {
+                            daily = (DailyPlanCellViewModel)subItem;
+                            break;
+                        }
+                    }
+                    if (daily != null)
+                        item.Remove(daily);
+                }
             }
 
             //Reload();
