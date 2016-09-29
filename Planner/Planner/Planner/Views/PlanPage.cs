@@ -28,8 +28,9 @@ namespace Planner.Views
             categoryEntry.SetBinding(Entry.TextProperty, "Category");
 
             //var doneLabel = new Label { Text = "Done" };
-            var dateEntry = new Entry { Text = "Date" };
-            dateEntry.SetBinding(Entry.TextProperty, "StartDate");
+            var dateEntry = new DatePicker();
+            //var dateEntry = new Entry { Text = "Date" };
+            dateEntry.SetBinding(DatePicker.DateProperty, "StartDate");
 
 
             var saveButton = new Button { Text = "Save" };

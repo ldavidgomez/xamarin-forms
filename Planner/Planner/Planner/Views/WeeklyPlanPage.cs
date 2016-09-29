@@ -37,6 +37,10 @@ namespace Planner.Views
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDailyPlan", BindingMode.TwoWay));
             DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
 
+            if (Device.OS != TargetPlatform.WinPhone)
+                DailyPlans.GroupHeaderTemplate = new DataTemplate(typeof(HeaderCell));
+
+
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
