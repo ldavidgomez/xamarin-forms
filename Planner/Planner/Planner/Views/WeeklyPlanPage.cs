@@ -22,9 +22,33 @@ namespace Planner.Views
 
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
 
-            DatePicker datePicker = new DatePicker();
+            Image dateImage = new Image
+            {
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.End,
+                Source = FileImageSource.FromFile("calendar"),
+                HeightRequest = 30,
+                Margin = new Thickness(10, 0),
+                BackgroundColor = Color.Blue,
+            };
+
+
+            DatePicker datePicker = new DatePicker()
+            {
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                BackgroundColor = Color.Navy,
+            };
             datePicker.SetBinding(DatePicker.MinimumDateProperty, "MinimunDate");
             datePicker.SetBinding(DatePicker.DateProperty, "Date");
+
+            var dateContainer = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Orientation = StackOrientation.Horizontal,
+                Children = { datePicker, dateImage, }
+            };
 
             var DailyPlans = new ListView();
             DailyPlans.VerticalOptions = LayoutOptions.StartAndExpand;
@@ -50,7 +74,7 @@ namespace Planner.Views
                 Orientation =StackOrientation.Vertical,
                 Padding = 5,
                 BackgroundColor = Color.Green,
-                Children = { datePicker, DailyPlans }
+                Children = { dateContainer, DailyPlans }
             };
         }
     }
