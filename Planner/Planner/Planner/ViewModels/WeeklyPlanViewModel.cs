@@ -107,7 +107,7 @@ namespace Planner.ViewModels
 
             var startDate = DateTimeUtils.StartOfWeek(DateTime.Parse(plan.startDate), dfi.FirstDayOfWeek);
 
-            this.plan = new Plan(startDate.ToString("dd/MM/yy"), startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
+            this.plan = new Plan(string.Empty, startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
             this.Date = startDate;
             this.MinimunDate = startDate;
 
@@ -173,7 +173,7 @@ namespace Planner.ViewModels
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    Plan plan = new Plan(DateTime.Parse(this.plan.startDate).AddDays(i).ToString(), DateTime.Parse(this.plan.startDate).AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
+                    Plan plan = new Plan(String.Empty, DateTime.Parse(this.plan.startDate).AddDays(i), string.Empty, PlanEnumeration.PlanType.Daily);
                     DailyPlans.Add(new DailyPlanCellViewModel(plan));
                     App.Database.SavePlan(plan);
                     MessagingCenter.Send(this, "DailyPlanCreated", plan);
