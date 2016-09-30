@@ -105,7 +105,8 @@ namespace Planner.ViewModels
 
             MessagingCenter.Subscribe<HeaderCell, string>(this, "AddPlan", (sender, arg) =>
             {
-                var viewModel = App.Database.GetDailyPlan(DateTime.Parse(arg));
+                //var viewModel = App.Database.GetDailyPlan(DateTime.Parse(arg));
+                var viewModel = new Plan(String.Empty, DateTime.Parse(arg), string.Empty, PlanEnumeration.PlanType.Plan);
                 var planvm = new PlanViewModel(viewModel);
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
