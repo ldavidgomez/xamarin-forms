@@ -35,7 +35,10 @@ namespace Planner.Views
             DailyPlans.IsGroupingEnabled = true;
             //DailyPlans.GroupDisplayBinding = new Binding("Key");
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDailyPlan", BindingMode.TwoWay));
-            DailyPlans.ItemTemplate = new DataTemplate(typeof(DailyPlanCell));
+            DailyPlans.ItemTemplate = new DataTemplate(typeof(PlanCell));
+
+            DailyPlans.BackgroundColor = Color.Olive;
+            
 
             if (Device.OS != TargetPlatform.WinPhone)
                 DailyPlans.GroupHeaderTemplate = new DataTemplate(typeof(HeaderCell));
@@ -46,6 +49,7 @@ namespace Planner.Views
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Orientation =StackOrientation.Vertical,
                 Padding = 5,
+                BackgroundColor = Color.Green,
                 Children = { datePicker, DailyPlans }
             };
         }

@@ -16,6 +16,10 @@ namespace Planner.ViewModels
 
         public Plan Plan { get { return plan; } }
 
+        public Guid Id { get { return plan.id; } }
+
+        public PlanEnumeration.PlanType type { get { return plan.type; } }
+
         public string Description { get { return plan.description; } }
 
         public string Category { get { return plan.category; } }

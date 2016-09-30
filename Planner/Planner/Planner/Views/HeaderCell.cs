@@ -46,7 +46,7 @@ namespace Planner.Views
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += (s, e) =>
             {
-                MessagingCenter.Send(this, "DailyPlan", s);
+                MessagingCenter.Send(this, "AddPlan", title.Text);
             };
 
             plus.GestureRecognizers.Add(tapGestureRecognizer);

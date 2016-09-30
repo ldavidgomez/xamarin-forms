@@ -86,10 +86,12 @@ namespace Planner.ViewModels
                 Navigation.Push(ViewFactory.CreatePage(planvm));
             });
 
-            //MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, model) =>
-            //{
-            //    Reload();
-            //});
+            MessagingCenter.Subscribe<HeaderCell, string>(this, "AddPlan", (sender, arg) =>
+            {
+                var viewModel = App.Database.GetDailyPlan(DateTime.Parse(arg));
+                var planvm = new PlanViewModel(viewModel);
+                Navigation.Push(ViewFactory.CreatePage(planvm));
+            });
         }
 
         private void InitializePlan(Plan plan)
@@ -292,7 +294,7 @@ namespace Planner.ViewModels
                 if (selectedDailyPlan != null)
                 {
 
-                    var todovm = new DailyPlanViewModel(((DailyPlanCellViewModel)selectedDailyPlan).Plan);
+                    var todovm = new PlanViewModel(((Planner.ViewModels.DailyPlanCellViewModel)selectedDailyPlan).Plan);
 
                     Navigation.Push(ViewFactory.CreatePage(todovm));
 

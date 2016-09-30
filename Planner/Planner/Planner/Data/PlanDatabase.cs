@@ -87,6 +87,22 @@ namespace Planner.Data
             }
         }
 
+        public Plan GetDailyPlan(DateTime date)
+        {
+            lock (locker)
+            {
+                var dailyPlan = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [type] = ? AND [startDate] = ? AND [endDate] = ? ", new object[] { PlanEnumeration.PlanType.Daily, date.ToString("yyyy-MM-dd HH:mm:ss"), date.ToString("yyyy-MM-dd HH:mm:ss") });
+
+                if (dailyPlan.Count > 1)
+                    throw new RankException("Can't exists more than one day with same date");
+
+                if (dailyPlan.Count == 1)
+                    return dailyPlan[0];
+
+                return null;
+            }
+        }
+
         public IList<Plan> GetDailyPlansFromWeek(Plan plan)
         {
             lock (locker)

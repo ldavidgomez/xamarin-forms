@@ -72,14 +72,15 @@ namespace Planner.ViewModels
             }
         }
 
-        public string StartDate
+        public DateTime StartDate
         {
-            get { return DateTime.Parse(plan.startDate).Date.ToString(dateFormat); }
+            get { return DateTime.Parse(plan.startDate); }
             set
             {
-                if (plan.startDate == value)
+                if (plan.startDate == value.Date.ToString(dateFormat))
                     return;
-                plan.startDate = DateTime.Parse(value).ToString(dateFormatToPersist);
+
+                plan.startDate = value.ToString(dateFormatToPersist);
                 OnPropertyChanged();
             }
         }
