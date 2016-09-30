@@ -31,11 +31,6 @@ namespace Planner.ViewModels
             get { return plan.startDate; }
         }
 
-        public string Day1
-        {
-            get { return plan.startDate; }
-        }
-
         ObservableCollection<PlanCellViewModel> _plans = new ObservableCollection<PlanCellViewModel>();
         public ObservableCollection<PlanCellViewModel> Plans
         {
@@ -60,12 +55,6 @@ namespace Planner.ViewModels
             MainText = DateTime.Parse(plan.startDate).ToString("dd/MM/yyyy");
             this.plan = plan;
             GetPlans();
-
-            MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanSaved", (sender, viewModel) =>
-            {
-                App.Database.SavePlan(viewModel);
-                GetPlans();
-            });
 
             MessagingCenter.Subscribe<DailyPlanPage, Plan>(this, "CreatePlan", (sender, viewModel) => {
                 viewModel.startDate = StartDate;
@@ -107,9 +96,6 @@ namespace Planner.ViewModels
 
         public void CreatePlan()
         {
-            //var todo = new Plan(PlanEnumeration.PlanType.Item);
-            //var todovm = new ItemViewModel(todo);
-            //Navigation.Push(ViewFactory.CreatePage(todovm));
         }
 
         public ICommand CreatePlanCommand

@@ -39,7 +39,6 @@ namespace Planner.Views
 
 
             var toolBarItem = new ToolbarItem("+", null, () => {
-                //var tool = new Plan(startDate.ToString("dd/MM/yy"), startDate, string.Empty, PlanEnumeration.PlanType.Weekly);
                 var tool = new Plan(PlanEnumeration.PlanType.Plan);
                 MessagingCenter.Send(this, "CreatePlan", tool);
             }, 0, 0);

@@ -17,6 +17,8 @@ namespace Planner.ViewModels
 
         public Plan Plan { get { return plan; } }
 
+        public Guid Id { get { return plan.id; } }
+
         public PlanEnumeration.PlanType type { get { return plan.type; } }
 
         public string Description { get { return plan.description; } }
@@ -24,6 +26,8 @@ namespace Planner.ViewModels
         public string Category { get { return plan.category; } }
 
         public string StartDate { get { return DateTime.Parse(plan.startDate).ToString(dateFormat); } }
+
+        public string EndDate { get { return DateTime.Parse(plan.endDate).ToString(dateFormat); } }
 
         ObservableCollection<PlanCellViewModel> _plans = new ObservableCollection<PlanCellViewModel>();
         public ObservableCollection<PlanCellViewModel> Plans
@@ -73,6 +77,16 @@ namespace Planner.ViewModels
                 x.Add(new PlanCellViewModel(t));
             }
             Plans = x;
+        }
+
+        public override bool Equals(object obj)
+        {
+            DailyPlanCellViewModel plan = (DailyPlanCellViewModel)obj;
+
+            if (plan.Id.Equals(this.Id))
+                return true;
+
+            return false;
         }
     }
 }

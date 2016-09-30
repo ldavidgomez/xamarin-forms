@@ -34,7 +34,7 @@ namespace Planner.Model
         { }
 
         public Plan(PlanEnumeration.PlanType type)
-            : this("Description", DateTime.Now, "Category", type)
+            : this(string.Empty, DateTime.Now, string.Empty, type)
         { }
 
         public Plan(string description, DateTime startDate, string category, PlanEnumeration.PlanType type)
