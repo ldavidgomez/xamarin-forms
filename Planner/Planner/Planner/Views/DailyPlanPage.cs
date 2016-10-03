@@ -33,18 +33,18 @@ namespace Planner.Views
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                BackgroundColor = Color.Aqua,
+                //BackgroundColor = Color.Aqua,
                 Children = { DailyPlans }
             };
 
 
-            var toolBarItem = new ToolbarItem("+", null, () => {
+            var toolBarItem = new ToolbarItem("+", "add", () => {
                 var tool = new Plan(PlanEnumeration.PlanType.Plan);
                 MessagingCenter.Send(this, "CreatePlan", tool);
             }, 0, 0);
             if (Device.OS == TargetPlatform.Android)
             { // BUG: Android doesn't support the icon being null
-                toolBarItem = new ToolbarItem("+", "plus", () => {
+                toolBarItem = new ToolbarItem("+", "add", () => {
                     var tool = new Plan(PlanEnumeration.PlanType.Plan);
                     MessagingCenter.Send(this, "CreatePlan", tool);
                 }, 0, 0);

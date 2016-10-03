@@ -35,8 +35,8 @@ namespace Planner
         {
             RegisterTypes();
             var mainNav = new NavigationPage(ViewFactory.CreatePage<MainPageViewModel>());
-            mainNav.BarBackgroundColor = Color.FromHex("a97946");
-            mainNav.BackgroundColor = Color.FromHex("a97900");
+            //mainNav.BarBackgroundColor = Color.FromHex("0863BB");
+            //mainNav.BackgroundColor = Color.FromHex("1976d2");
 
             MessagingCenter.Subscribe<MainPageViewModel, Plan>(mainNav, "WeeklyPlanSelected", (sender, model) => {
                 var planvm = new PlanViewModel(model);

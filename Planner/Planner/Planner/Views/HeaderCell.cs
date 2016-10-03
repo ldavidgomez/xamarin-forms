@@ -16,7 +16,7 @@ namespace Planner.Views
             {
                 FontSize = Device.GetNamedSize(NamedSize.Small, this),
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Color.White,
+                //TextColor = Color.White,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
                 VerticalOptions = LayoutOptions.Center
             };
@@ -37,7 +37,7 @@ namespace Planner.Views
             {
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.End,
-                Source = FileImageSource.FromFile("plus"),
+                Source = FileImageSource.FromFile("add"),
                 HeightRequest = 30
             };
 
@@ -56,7 +56,7 @@ namespace Planner.Views
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 HeightRequest = 25,
-                BackgroundColor = Color.FromRgb(52, 152, 218),
+                //BackgroundColor = Color.FromRgb(52, 152, 218),
                 Padding = new Thickness(15, 0, 15, 0),
                 Orientation = StackOrientation.Horizontal,
                 Children = { title, plus }

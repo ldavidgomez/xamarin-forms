@@ -29,7 +29,7 @@ namespace Planner.Views
                 Source = FileImageSource.FromFile("calendar"),
                 HeightRequest = 30,
                 Margin = new Thickness(10, 0),  
-                BackgroundColor = Color.Blue,
+                //BackgroundColor = Color.Blue,
             };
 
 
@@ -37,7 +37,7 @@ namespace Planner.Views
             {
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                BackgroundColor = Color.Navy,
+                //BackgroundColor = Color.Navy,
             };
             datePicker.SetBinding(DatePicker.MinimumDateProperty, "MinimunDate");
             datePicker.SetBinding(DatePicker.DateProperty, "Date");
@@ -61,7 +61,7 @@ namespace Planner.Views
             DailyPlans.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedDailyPlan", BindingMode.TwoWay));
             DailyPlans.ItemTemplate = new DataTemplate(typeof(PlanCell));
 
-            DailyPlans.BackgroundColor = Color.Olive;
+            //DailyPlans.BackgroundColor = Color.Olive;
             
 
             if (Device.OS != TargetPlatform.WinPhone)
@@ -73,7 +73,7 @@ namespace Planner.Views
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Orientation =StackOrientation.Vertical,
                 Padding = 5,
-                BackgroundColor = Color.Green,
+                //BackgroundColor = Color.Green,
                 Children = { dateContainer, DailyPlans }
             };
         }
