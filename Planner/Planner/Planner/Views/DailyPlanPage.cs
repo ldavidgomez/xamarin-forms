@@ -38,13 +38,13 @@ namespace Planner.Views
             };
 
 
-            var toolBarItem = new ToolbarItem("+", "add", () => {
+            var toolBarItem = new ToolbarItem("New plan", "add", () => {
                 var tool = new Plan(PlanEnumeration.PlanType.Plan);
                 MessagingCenter.Send(this, "CreatePlan", tool);
             }, 0, 0);
             if (Device.OS == TargetPlatform.Android)
             { // BUG: Android doesn't support the icon being null
-                toolBarItem = new ToolbarItem("+", "add", () => {
+                toolBarItem = new ToolbarItem("New plan", "add", () => {
                     var tool = new Plan(PlanEnumeration.PlanType.Plan);
                     MessagingCenter.Send(this, "CreatePlan", tool);
                 }, 0, 0);

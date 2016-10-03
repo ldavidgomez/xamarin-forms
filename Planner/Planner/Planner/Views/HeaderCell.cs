@@ -40,7 +40,6 @@ namespace Planner.Views
                 Source = FileImageSource.FromFile("add"),
                 HeightRequest = 30
             };
-
             //title.SetBinding(new Binding("SelectedPlan", BindingMode.TwoWay));
 
             var tapGestureRecognizer = new TapGestureRecognizer();
