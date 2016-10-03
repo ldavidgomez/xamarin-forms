@@ -26,6 +26,7 @@ namespace Planner.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::ModernHttpClient.Resource.String.library_name = global::Planner.Droid.Resource.String.library_name;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::Planner.Droid.Resource.String.ApplicationName;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::Planner.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::Planner.Droid.Resource.Attribute.actionBarSize;
@@ -3038,6 +3039,9 @@ namespace Planner.Droid
 			
 			// aapt resource value: 0x7f090025
 			public const int character_counter_pattern = 2131296293;
+			
+			// aapt resource value: 0x7f090028
+			public const int library_name = 2131296296;
 			
 			// aapt resource value: 0x7f090000
 			public const int mr_button_content_description = 2131296256;

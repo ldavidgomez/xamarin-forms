@@ -28,7 +28,7 @@ namespace Planner.Views
                 HorizontalOptions = LayoutOptions.End,
                 Source = FileImageSource.FromFile("calendar"),
                 HeightRequest = 30,
-                Margin = new Thickness(10, 0),
+                Margin = new Thickness(10, 0),  
                 BackgroundColor = Color.Blue,
             };
 
