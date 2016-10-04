@@ -56,6 +56,7 @@ namespace Planner.ViewModels
             _deleteDatabaseCommand = new Command(DeleteDatabase);
 
             MainText = "Planner!";
+            MainText.PadLeft(5);
 
             var lastUpdateWeeklyPlans = App.Database.GetLastUpdatesWeeklyPlans(5);
 
