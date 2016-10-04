@@ -29,10 +29,10 @@ namespace Planner.Views
             lastUpdateWeeklyPlansLV.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedWeeklyPlan", BindingMode.TwoWay));
             lastUpdateWeeklyPlansLV.ItemTemplate = new DataTemplate(typeof(WeeklyPlanCell));
 
-            var all = new ListView();
-            all.RowHeight = 40;
-            all.SetBinding(ListView.ItemsSourceProperty, "All");
-            all.ItemTemplate = new DataTemplate(typeof(WeeklyPlanCell));
+            var allPlans = new ListView();
+            allPlans.RowHeight = 40;
+            allPlans.SetBinding(ListView.ItemsSourceProperty, "All");
+            allPlans.ItemTemplate = new DataTemplate(typeof(WeeklyPlanCell));
 
             var deleteAllButton = new Button { Text = "Delete database" };
             deleteAllButton.SetBinding(Button.CommandProperty, "DeleteDatabaseCommand");
@@ -40,7 +40,7 @@ namespace Planner.Views
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Children = { lastUpdateWeeklyPlansLV, all, deleteAllButton }
+                Children = { lastUpdateWeeklyPlansLV, deleteAllButton }
             };
 
             

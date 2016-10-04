@@ -141,7 +141,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Pages, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.Pages.2.3.0.38-pre2\lib\Xamarin.iOS10\Xamarin.Forms.Pages.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.Pages.2.3.0.107\lib\Xamarin.iOS10\Xamarin.Forms.Pages.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
