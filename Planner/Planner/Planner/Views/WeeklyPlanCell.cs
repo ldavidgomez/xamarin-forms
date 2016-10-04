@@ -29,14 +29,14 @@ namespace Planner.Views
             {
                 VerticalTextAlignment = TextAlignment.Center
             };
-            endDateLabel.SetBinding(Label.TextProperty, "PlanType");
+            typeLabel.SetBinding(Label.TextProperty, "PlanType");
 
             var layout = new StackLayout
             {
                 Padding = new Thickness(20, 0, 0, 0),
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
-                Children = { startDateLabel, separatorLabel, endDateLabel, typeLabel }
+                Children = { startDateLabel, separatorLabel, endDateLabel }
             };
             View = layout;
         }

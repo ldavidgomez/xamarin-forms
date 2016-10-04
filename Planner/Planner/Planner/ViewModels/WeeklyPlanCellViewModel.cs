@@ -19,7 +19,7 @@ namespace Planner.ViewModels
 
         public string SeparatorChar { get { return separatorChar; } }
 
-        public string EndDate { get { return DateTime.Parse(plan.endDate).ToString(dateFormat); } }
+        public string EndDate { get { return DateTime.Parse(plan.endDate).Date.ToString(dateFormat); } }
 
         public string PlanType { get { return plan.type.ToString(); } }
         public WeeklyPlanCellViewModel(Plan plan)

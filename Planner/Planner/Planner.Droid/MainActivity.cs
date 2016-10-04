@@ -9,7 +9,7 @@ using Xamarin.Forms.Platform.Android;
 namespace Planner.Droid
 {
     //[Activity(Label = "Planner", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    [Activity(Label = "Planner", Icon = "@drawable/app_icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Planner", Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)
