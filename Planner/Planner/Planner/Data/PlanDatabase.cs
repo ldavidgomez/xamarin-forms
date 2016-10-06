@@ -9,6 +9,8 @@ using SQLite.Net;
 using Planner.Model;
 using Planner.ViewModels;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using Planner.Utilities;
 
 namespace Planner.Data
 {
@@ -112,9 +114,12 @@ namespace Planner.Data
 			lock (locker)
 			{
 				var plans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [Category] LIKE ? ORDER BY [Category] DESC ", new object[] { searched });
-				var categories = (from plan in plans select plan.category).ToList();
+				var categories = (from plan in plans select plan.category);
 
-				return categories;
+			
+				categories = categories.Select(p => StringUtils.UppercaseFirst(p)).ToList().Distinct();
+
+				return categories.ToList();
 			}
 		}
 
