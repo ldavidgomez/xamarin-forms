@@ -27,13 +27,16 @@ namespace Planner.Views
             var categoryEntry = new Entry { Text = "<Category>" };
             categoryEntry.SetBinding(Entry.TextProperty, "Category");
 
-            //var doneLabel = new Label { Text = "Done" };
-            var dateEntry = new DatePicker();
+			//var doneLabel = new Label { Text = "Done" };
+			string dateFormat = "dd/MM/yy";
+			var dateEntry = new DatePicker();
             //var dateEntry = new Entry { Text = "Date" };
             dateEntry.SetBinding(DatePicker.DateProperty, "StartDate");
+			dateEntry.Format = dateFormat;
+			dateEntry.Date = DateTime.SpecifyKind(dateEntry.Date, DateTimeKind.Utc).ToLocalTime();
 
 
-            var saveButton = new Button { Text = "Save" };
+			var saveButton = new Button { Text = "Save" };
             saveButton.SetBinding(Button.CommandProperty, "SaveCommand");
             var cancelButton = new Button { Text = "Cancel" };
             cancelButton.SetBinding(Button.CommandProperty, "CancelCommand");

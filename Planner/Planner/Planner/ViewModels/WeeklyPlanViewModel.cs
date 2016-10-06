@@ -103,7 +103,13 @@ namespace Planner.ViewModels
                 InitializeDailyPlan();
             });
 
-            MessagingCenter.Subscribe<HeaderCell, string>(this, "AddPlan", (sender, arg) =>
+			MessagingCenter.Subscribe<PlanViewModel, Plan>(this, "PlanDeleted", (sender, viewModel) =>
+			{
+				App.Database.DeletePlan(viewModel);
+				InitializeDailyPlan();
+			});
+
+			MessagingCenter.Subscribe<HeaderCell, string>(this, "AddPlan", (sender, arg) =>
             {
                 //var viewModel = App.Database.GetDailyPlan(DateTime.Parse(arg));
                 var viewModel = new Plan(String.Empty, DateTime.Parse(arg), string.Empty, PlanEnumeration.PlanType.Plan);

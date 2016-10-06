@@ -32,8 +32,8 @@ namespace Planner.Views
                 //BackgroundColor = Color.Blue,
             };
 
-
-            DatePicker datePicker = new DatePicker()
+			string dateFormat = "dd/MM/yy";
+			DatePicker datePicker = new DatePicker()
             {
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
@@ -41,8 +41,10 @@ namespace Planner.Views
             };
             datePicker.SetBinding(DatePicker.MinimumDateProperty, "MinimunDate");
             datePicker.SetBinding(DatePicker.DateProperty, "Date");
+			datePicker.Format = dateFormat;
+			datePicker.Date = DateTime.SpecifyKind(datePicker.Date, DateTimeKind.Utc).ToLocalTime();
 
-            var dateContainer = new StackLayout
+			var dateContainer = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,

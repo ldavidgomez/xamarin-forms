@@ -187,7 +187,15 @@ namespace Planner.Data
             }
         }
 
-        public int DeleteAllPlan()
+		public int DeletePlan(Plan plan)
+		{
+			lock (locker)
+			{
+				return SyncConnection.Delete(plan);
+			}
+		}
+
+		public int DeleteAllPlan()
         {
             lock (locker)
             {

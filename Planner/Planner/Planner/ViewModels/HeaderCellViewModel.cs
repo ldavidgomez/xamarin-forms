@@ -12,7 +12,7 @@ namespace Planner.ViewModels
     class HeaderCellViewModel : BaseViewModel
     {
         Plan plan;
-        string dateFormat = "dd/MM/yy";
+        //string dateFormat = "dd/MM/yy";
         const string dateFormatToPersist = "yyyy-MM-dd HH:mm:ss";
 
         public Plan Plan { get { return plan; } }
