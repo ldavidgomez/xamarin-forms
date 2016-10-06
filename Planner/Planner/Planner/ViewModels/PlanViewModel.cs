@@ -26,7 +26,7 @@ namespace Planner.ViewModels
         {
             MainText = "New Plan!";
             this.plan = plan;
-            SaveCommand = new Command(Save);
+			SaveCommand = new Command(Save);
             DeleteCommand = new Command(Delete);
             CancelCommand = new Command(() => Navigation.Pop());
         }
@@ -94,6 +94,13 @@ namespace Planner.ViewModels
 			}
 		}
 
+		bool _categoriesVisibility = false;
+		public bool CategoriesVisibility
+		{
+			get { return _categoriesVisibility; }
+			set { _categoriesVisibility = value; }
+		}
+
 		public DateTime StartDate
 		{
 			get { return DateTime.Parse(plan.startDate); }
@@ -135,6 +142,8 @@ namespace Planner.ViewModels
 				x.Add(t);
 			}
 			Categories = x;
+
+			CategoriesVisibility = true;
 		}
 
 		public ICommand SaveCommand
@@ -197,5 +206,5 @@ namespace Planner.ViewModels
                 }
             }
         }
-    }
+	}
 }

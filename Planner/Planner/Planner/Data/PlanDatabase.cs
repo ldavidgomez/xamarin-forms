@@ -117,7 +117,11 @@ namespace Planner.Data
 				var categories = (from plan in plans select plan.category);
 
 			
-				categories = categories.Select(p => StringUtils.UppercaseFirst(p)).ToList().Distinct();
+				categories = categories.Select(p => StringUtils.UppercaseFirst(p))
+																.Where(p => (!string.IsNullOrEmpty(p)))
+																.OrderBy(p => p.ToString())
+																.ToList()
+																.Distinct();
 
 				return categories.ToList();
 			}

@@ -26,33 +26,31 @@ namespace Planner.Views
 			};
             descriptionEntry.SetBinding(Entry.TextProperty, "Description");
 
-            //var notesLabel = new Label { Text = "Notes" };
             var categoryEntry = new Entry {
 				Text = "Category",
 				Keyboard = Keyboard.Text				
 			};
             categoryEntry.SetBinding(Entry.TextProperty, "Category");
+			
 
 			var suggestLV = new ListView();
 			suggestLV.RowHeight = 40;
 			suggestLV.SetBinding(ListView.ItemsSourceProperty, "Categories");
-			//suggestLV.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedWeeklyPlan", BindingMode.TwoWay));
-			//suggestLV.ItemTemplate = new DataTemplate(typeof(TextCell));
 
 			var relative = new RelativeLayout
 			{
 				Parent = categoryEntry
+				
 			};
 			relative.Children.Add(suggestLV, Constraint.RelativeToParent((parent) => { return (parent.Width) - 100; }));
 
+			//relative.SetBinding(RelativeLayout.IsVisibleProperty, "CategoriesVisibility");
+			//suggestLV.SetBinding(ListView.IsVisibleProperty, "CategoriesVisibility");
 
-			//var doneLabel = new Label { Text = "Done" };
 			string dateFormat = "dd/MM/yy";
 			var datePicker = new DatePicker();
-            //var dateEntry = new Entry { Text = "Date" };
             datePicker.SetBinding(DatePicker.DateProperty, "StartDate");
 			datePicker.Format = dateFormat;
-			//datePicker.Date = DateTime.SpecifyKind(datePicker.Date, DateTimeKind.Utc).ToLocalTime();
 			datePicker.SetBinding(DatePicker.MinimumDateProperty, "MinimunDate");
 
 
