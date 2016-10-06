@@ -29,9 +29,22 @@ namespace Planner.Views
             //var notesLabel = new Label { Text = "Notes" };
             var categoryEntry = new Entry {
 				Text = "Category",
-				Keyboard = Keyboard.Text
+				Keyboard = Keyboard.Text				
 			};
             categoryEntry.SetBinding(Entry.TextProperty, "Category");
+
+			var suggestLV = new ListView();
+			suggestLV.RowHeight = 40;
+			suggestLV.SetBinding(ListView.ItemsSourceProperty, "Categories");
+			//suggestLV.SetBinding(ListView.SelectedItemProperty, new Binding("SelectedWeeklyPlan", BindingMode.TwoWay));
+			//suggestLV.ItemTemplate = new DataTemplate(typeof(TextCell));
+
+			var relative = new RelativeLayout
+			{
+				Parent = categoryEntry
+			};
+			relative.Children.Add(suggestLV, Constraint.RelativeToParent((parent) => { return (parent.Width) - 100; }));
+
 
 			//var doneLabel = new Label { Text = "Done" };
 			string dateFormat = "dd/MM/yy";
@@ -56,9 +69,10 @@ namespace Planner.Views
             {
                 VerticalOptions = LayoutOptions.StartAndExpand,
                 Padding = new Thickness(20),
-                Children = {descriptionEntry, categoryEntry,
-                    datePicker,
-                    saveButton, cancelButton, deleteButton}
+                Children = {
+					descriptionEntry, categoryEntry, suggestLV, datePicker,
+                    saveButton, cancelButton, deleteButton
+				}
             };
         }
         

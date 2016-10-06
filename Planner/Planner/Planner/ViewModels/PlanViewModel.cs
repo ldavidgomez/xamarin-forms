@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Runtime.CompilerServices;
 
 namespace Planner.ViewModels
 {
@@ -75,18 +76,24 @@ namespace Planner.ViewModels
             }
         }
 
-		//public DateTime StartDate
-		//{
-		//    get { return DateTime.Parse(plan.startDate); }
-		//    set
-		//    {
-		//        if (plan.startDate == value.Date.ToString(dateFormat))
-		//            return;
+		ObservableCollection<string> _categories = new ObservableCollection<string>();
+		public ObservableCollection<string> Categories
+		{
+			get
+			{
+				if (_categories.Count == 0)
+					_categories.Add("nothing to do here!");
+				return _categories;
+			}
+			set
+			{
+				if (_categories == value)
+					return;
+				_categories = value;
+				OnPropertyChanged();
+			}
+		}
 
-		//        plan.startDate = value.ToString(dateFormatToPersist);
-		//        OnPropertyChanged();
-		//    }
-		//}
 		public DateTime StartDate
 		{
 			get { return DateTime.Parse(plan.startDate); }
@@ -105,7 +112,30 @@ namespace Planner.ViewModels
 			get { return DateTimeUtils.StartOfWeek(DateTime.Parse(plan.startDate), dfi.FirstDayOfWeek); }
 		}
 
+		protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			switch (propertyName)
+			{
+				case "Category":
+					SetCategories(Category);
+					break;
+				default:
+					base.OnPropertyChanged(propertyName);
+					break;
+			}
+		}
 
+		private void SetCategories(string category)
+		{
+			var categories = App.Database.GetCategories(category);
+
+			var x = new ObservableCollection<string>();
+			foreach (var t in categories)
+			{
+				x.Add(t);
+			}
+			Categories = x;
+		}
 
 		public ICommand SaveCommand
         {

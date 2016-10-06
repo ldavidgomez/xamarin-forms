@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using SQLite.Net;
 using Planner.Model;
+using Planner.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace Planner.Data
 {
@@ -103,7 +105,20 @@ namespace Planner.Data
             }
         }
 
-        public IList<Plan> GetDailyPlansFromWeek(Plan plan)
+		internal IList<string> GetCategories(string filter)
+		{
+			var searched = "%" + filter + "%";
+
+			lock (locker)
+			{
+				var plans = SyncConnection.Query<Plan>("SELECT * FROM [Plan] WHERE [Category] LIKE ? ORDER BY [Category] DESC ", new object[] { searched });
+				var categories = (from plan in plans select plan.category).ToList();
+
+				return categories;
+			}
+		}
+
+		public IList<Plan> GetDailyPlansFromWeek(Plan plan)
         {
             lock (locker)
             {
