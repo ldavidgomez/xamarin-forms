@@ -100,7 +100,6 @@ namespace Planner.ViewModels
 			}
 		}
 
-		private DateTime _minimunDate;
 		public DateTime MinimunDate
 		{
 			get { return DateTimeUtils.StartOfWeek(DateTime.Parse(plan.startDate), dfi.FirstDayOfWeek); }
