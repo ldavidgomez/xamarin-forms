@@ -42,7 +42,7 @@ namespace Planner.Views
             datePicker.SetBinding(DatePicker.MinimumDateProperty, "MinimunDate");
             datePicker.SetBinding(DatePicker.DateProperty, "Date");
 			datePicker.Format = dateFormat;
-			datePicker.Date = DateTime.SpecifyKind(datePicker.Date, DateTimeKind.Utc).ToLocalTime();
+			//datePicker.Date = DateTime.SpecifyKind(datePicker.Date, DateTimeKind.Utc).ToLocalTime();
 
 			var dateContainer = new StackLayout
             {

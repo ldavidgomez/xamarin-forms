@@ -1,7 +1,9 @@
 ﻿using Planner.Model;
+using Planner.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,8 @@ namespace Planner.ViewModels
     class PlanViewModel : BaseViewModel
     {
         Plan plan;
-        ICommand _saveCommand, _deleteCommand, _cancelCommand;
+		DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+		ICommand _saveCommand, _deleteCommand, _cancelCommand;
 
         const string dateFormatToPersist = "yyyy-MM-dd HH:mm:ss";
         const string dateFormat = "dd/MM/yy";
@@ -72,22 +75,40 @@ namespace Planner.ViewModels
             }
         }
 
-        public DateTime StartDate
-        {
-            get { return DateTime.Parse(plan.startDate); }
-            set
-            {
-                if (plan.startDate == value.Date.ToString(dateFormat))
-                    return;
+		//public DateTime StartDate
+		//{
+		//    get { return DateTime.Parse(plan.startDate); }
+		//    set
+		//    {
+		//        if (plan.startDate == value.Date.ToString(dateFormat))
+		//            return;
 
-                plan.startDate = value.ToString(dateFormatToPersist);
-                OnPropertyChanged();
-            }
-        }
+		//        plan.startDate = value.ToString(dateFormatToPersist);
+		//        OnPropertyChanged();
+		//    }
+		//}
+		public DateTime StartDate
+		{
+			get { return DateTime.Parse(plan.startDate); }
+			set
+			{
+				if (plan.startDate == value.Date.ToString(dateFormat))
+					return;
 
-       
+				plan.startDate = value.ToString(dateFormatToPersist);
+				OnPropertyChanged();
+			}
+		}
 
-        public ICommand SaveCommand
+		private DateTime _minimunDate;
+		public DateTime MinimunDate
+		{
+			get { return DateTimeUtils.StartOfWeek(DateTime.Parse(plan.startDate), dfi.FirstDayOfWeek); }
+		}
+
+
+
+		public ICommand SaveCommand
         {
             get { return _saveCommand; }
             set

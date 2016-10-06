@@ -20,20 +20,27 @@ namespace Planner.Views
             NavigationPage.SetHasNavigationBar(this, true);
 
             //var nameLabel = new Label { Text = "Name" };
-            var descriptionEntry = new Entry { Text = "<Description>" };
+            var descriptionEntry = new Entry {
+				Text = "Description",
+				Keyboard = Keyboard.Text
+			};
             descriptionEntry.SetBinding(Entry.TextProperty, "Description");
 
             //var notesLabel = new Label { Text = "Notes" };
-            var categoryEntry = new Entry { Text = "<Category>" };
+            var categoryEntry = new Entry {
+				Text = "Category",
+				Keyboard = Keyboard.Text
+			};
             categoryEntry.SetBinding(Entry.TextProperty, "Category");
 
 			//var doneLabel = new Label { Text = "Done" };
 			string dateFormat = "dd/MM/yy";
-			var dateEntry = new DatePicker();
+			var datePicker = new DatePicker();
             //var dateEntry = new Entry { Text = "Date" };
-            dateEntry.SetBinding(DatePicker.DateProperty, "StartDate");
-			dateEntry.Format = dateFormat;
-			dateEntry.Date = DateTime.SpecifyKind(dateEntry.Date, DateTimeKind.Utc).ToLocalTime();
+            datePicker.SetBinding(DatePicker.DateProperty, "StartDate");
+			datePicker.Format = dateFormat;
+			//datePicker.Date = DateTime.SpecifyKind(datePicker.Date, DateTimeKind.Utc).ToLocalTime();
+			datePicker.SetBinding(DatePicker.MinimumDateProperty, "MinimunDate");
 
 
 			var saveButton = new Button { Text = "Save" };
@@ -50,7 +57,7 @@ namespace Planner.Views
                 VerticalOptions = LayoutOptions.StartAndExpand,
                 Padding = new Thickness(20),
                 Children = {descriptionEntry, categoryEntry,
-                    dateEntry,
+                    datePicker,
                     saveButton, cancelButton, deleteButton}
             };
         }

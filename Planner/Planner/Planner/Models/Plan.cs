@@ -53,7 +53,7 @@ namespace Planner.Model
         private string setStartDay(DateTime date)
         {
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
-            var startDate = DateTimeUtils.StartOfWeek(DateTime.Now, dfi.FirstDayOfWeek);
+            DateTime _startDate = DateTimeUtils.StartOfWeek(DateTime.Now, dfi.FirstDayOfWeek);
 
             switch (this.type)
             {
@@ -62,7 +62,7 @@ namespace Planner.Model
                 case PlanEnumeration.PlanType.Daily:
                     return date.Date.ToString(dateFormatToPersist);
                 case PlanEnumeration.PlanType.Weekly:
-                    return startDate.ToString(dateFormatToPersist);
+                    return _startDate.ToString(dateFormatToPersist);
                 default:
                     throw new NotSupportedException("Not recognized Plan type");
             }
@@ -75,7 +75,7 @@ namespace Planner.Model
                 case PlanEnumeration.PlanType.Item:
                 case PlanEnumeration.PlanType.Plan:
                 case PlanEnumeration.PlanType.Daily:
-                    return DateTime.Parse(this.startDate).ToString(dateFormatToPersist); ;
+                    return this.startDate; ;
                 case PlanEnumeration.PlanType.Weekly:
                     return DateTime.Parse(this.startDate).AddDays(6).ToString(dateFormatToPersist);
                 default:

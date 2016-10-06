@@ -40,7 +40,7 @@ namespace Planner.Views
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Children = { lastUpdateWeeklyPlansLV, allPlans, deleteAllButton }
+                Children = { lastUpdateWeeklyPlansLV, deleteAllButton }
             };
 
             
