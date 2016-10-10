@@ -166,7 +166,7 @@ namespace Planner.ViewModels
             if (DailyPlans.Count > 0)
             {
                 var sorted = from plan in DailyPlans
-                             orderby DateTime.Parse(plan.StartDate).ToString("yyyyMMdd"), plan.Category
+                             orderby DateTime.Parse(plan.StartDate, new CultureInfo("fr-FR")).ToString("yyyyMMdd"), plan.Category
                              group plan by plan.StartDate into dailyPlanGroup
                              select new Grouping<string, DailyPlanCellViewModel>(dailyPlanGroup.Key, dailyPlanGroup);
 
